@@ -99,11 +99,22 @@ export default function CategoriesPage() {
       </motion.header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {categories.length === 0 && !loading && (
+          <motion.div 
+            variants={itemVariants} 
+            className="col-span-full text-center py-12 text-on-surface-variant"
+          >
+            <p className="text-body-large">No tienes categorías creadas aún.</p>
+            <p className="text-body-medium mt-2">Usa el botón + para crear una.</p>
+          </motion.div>
+        )}
         {categories.map((category, index) => (
           <motion.div
             key={category.id}
             variants={itemVariants}
             custom={index}
+            initial="visible" // Force visible state for debugging
+            animate="visible"
           >
             <Card className="bg-surface-container-low hover:bg-surface-container-high transition-colors cursor-pointer group">
               <CardBody className="flex flex-row items-center justify-between p-4">
