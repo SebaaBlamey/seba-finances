@@ -3,10 +3,10 @@
 ## Fase 0: Preparación del Entorno (1-2 horas)
 
 ### Setup Inicial
-- [ ] Crear cuenta en Supabase (supabase.com)
+- [x] Crear cuenta en Supabase (supabase.com)
 - [ ] Crear cuenta en Vercel (vercel.com)
-- [ ] Instalar Node.js (versión 18 o superior)
-- [ ] Configurar Git y GitHub
+- [x] Instalar Node.js (versión 18 o superior)
+- [x] Configurar Git y GitHub
 
 ### Crear Proyecto Next.js
 ```bash
