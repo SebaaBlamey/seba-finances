@@ -3,19 +3,27 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/presentation/contexts/AuthContext";
 import { SupabaseCategoryRepository } from "@/infraestructure/repositories/SupabaseCategoryRepository";
-import { Category } from "@/core/entities/Category";
-import { Card, CardBody, Button, Chip } from "@heroui/react";
-import { Plus, Trash2, Edit2, Tag } from "lucide-react";
+import { Category, CreateCategoryDTO, UpdateCategoryDTO } from "@/core/entities/Category";
+import { Card, CardBody, Chip } from "@heroui/react";
+import { Plus, Trash2, Edit2 } from "lucide-react";
 import { FAB } from "@/presentation/components/common/FAB";
 import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "@/presentation/utils/animations";
+import AddCategoryModal from "@/presentation/components/categories/AddCategoryModal";
+import Modal from "@/presentation/components/common/Modal";
+import Button from "@/presentation/components/common/Button";
 
 export default function CategoriesPage() {
   const { user } = useAuth();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [deleteConfirmation, setDeleteConfirmation] = useState<{ isOpen: boolean; categoryId: string | null }>({
+    isOpen: false,
+    categoryId: null,
+  });
   
-  // Mock data for now if DB is empty, or use repository
   const categoryRepository = new SupabaseCategoryRepository();
 
   useEffect(() => {
@@ -29,30 +37,50 @@ export default function CategoriesPage() {
     if (!user) return;
     setLoading(true);
     try {
-      // Try to fetch from DB, if fails (table might not exist), use mock
-      try {
-        const data = await categoryRepository.getAll(user.id);
-        if (data.length > 0) {
-          setCategories(data);
-        } else {
-          setMockCategories();
-        }
-      } catch (e) {
-        console.warn("Using mock categories due to error:", e);
-        setMockCategories();
-      }
+      const data = await categoryRepository.getAll(user.id);
+      setCategories(data);
+    } catch (e) {
+      console.error("Error loading categories:", e);
+      // Fallback to empty array if table doesn't exist yet
+      setCategories([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const setMockCategories = () => {
-    setCategories([
-      { id: "1", userId: "u1", name: "Comida", icon: "🍔", color: "primary", type: "expense", createdAt: new Date() },
-      { id: "2", userId: "u1", name: "Transporte", icon: "🚌", color: "secondary", type: "expense", createdAt: new Date() },
-      { id: "3", userId: "u1", name: "Salario", icon: "💰", color: "success", type: "income", createdAt: new Date() },
-      { id: "4", userId: "u1", name: "Ocio", icon: "🎮", color: "warning", type: "expense", createdAt: new Date() },
-    ]);
+  const handleCreateCategory = async (data: CreateCategoryDTO) => {
+    try {
+      if (editingCategory) {
+        await categoryRepository.update(editingCategory.id, data as UpdateCategoryDTO);
+      } else {
+        await categoryRepository.create(data);
+      }
+      await loadCategories();
+      setIsModalOpen(false);
+      setEditingCategory(null);
+    } catch (error) {
+      console.error("Error saving category:", error);
+    }
+  };
+
+  const handleDeleteCategory = async () => {
+    if (!deleteConfirmation.categoryId) return;
+    try {
+      await categoryRepository.delete(deleteConfirmation.categoryId);
+      await loadCategories();
+      setDeleteConfirmation({ isOpen: false, categoryId: null });
+    } catch (error) {
+      console.error("Error deleting category:", error);
+    }
+  };
+
+  const openEditModal = (category: Category) => {
+    setEditingCategory(category);
+    setIsModalOpen(true);
+  };
+
+  const openDeleteModal = (categoryId: string) => {
+    setDeleteConfirmation({ isOpen: true, categoryId });
   };
 
   return (
@@ -74,7 +102,7 @@ export default function CategoriesPage() {
           <motion.div
             key={category.id}
             variants={itemVariants}
-            custom={index} // Can be used for custom stagger if needed, but container handles it
+            custom={index}
           >
             <Card className="bg-surface-container-low hover:bg-surface-container-high transition-colors cursor-pointer group">
               <CardBody className="flex flex-row items-center justify-between p-4">
@@ -91,10 +119,20 @@ export default function CategoriesPage() {
                 </div>
                 
                 <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Button isIconOnly variant="light" size="sm" radius="full">
-                    <Edit2 size={18} className="text-on-surface-variant" />
+                  <Button 
+                    isIconOnly 
+                    variant="ghost" 
+                    onClick={() => openEditModal(category)}
+                    className="text-on-surface-variant hover:bg-surface-variant/20"
+                  >
+                    <Edit2 size={18} />
                   </Button>
-                  <Button isIconOnly variant="light" size="sm" radius="full" color="danger">
+                  <Button 
+                    isIconOnly 
+                    variant="ghost" 
+                    onClick={() => openDeleteModal(category.id)}
+                    className="text-error hover:bg-error/10"
+                  >
                     <Trash2 size={18} />
                   </Button>
                 </div>
@@ -115,8 +153,49 @@ export default function CategoriesPage() {
           size="large"
           icon={<Plus className="h-8 w-8" />}
           aria-label="Add category"
+          onClick={() => {
+            setEditingCategory(null);
+            setIsModalOpen(true);
+          }}
         />
       </motion.div>
+
+      {user && (
+        <AddCategoryModal
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            setEditingCategory(null);
+          }}
+          onSubmit={handleCreateCategory}
+          initialData={editingCategory}
+          userId={user.id}
+        />
+      )}
+
+      <Modal
+        isOpen={deleteConfirmation.isOpen}
+        onClose={() => setDeleteConfirmation({ isOpen: false, categoryId: null })}
+        title="Eliminar Categoría"
+        footer={
+          <>
+            <Button 
+              variant="ghost" 
+              onClick={() => setDeleteConfirmation({ isOpen: false, categoryId: null })}
+            >
+              Cancelar
+            </Button>
+            <Button 
+              className="bg-error text-on-error hover:bg-error/90"
+              onClick={handleDeleteCategory}
+            >
+              Eliminar
+            </Button>
+          </>
+        }
+      >
+        <p>¿Estás seguro de que deseas eliminar esta categoría? Esta acción no se puede deshacer.</p>
+      </Modal>
     </motion.div>
   );
 }
