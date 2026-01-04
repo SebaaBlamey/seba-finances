@@ -49,8 +49,11 @@ export default function AddTransactionModal({
     }
   }, [initialData, isOpen]);
 
-  const handleSubmit = async (e?: React.FormEvent) => {
-    e?.preventDefault();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleSubmit = async (e?: React.FormEvent | any) => {
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
     if (!user) return;
 
     setLoading(true);
