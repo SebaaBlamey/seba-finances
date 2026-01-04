@@ -38,6 +38,7 @@ export default function CategoriesPage() {
     setLoading(true);
     try {
       const data = await categoryRepository.getAll(user.id);
+      console.log("Categories loaded:", data);
       setCategories(data);
     } catch (e) {
       console.error("Error loading categories:", e);
