@@ -14,7 +14,7 @@ export default function HomePage() {
       if (user) {
         navigateTo("/dashboard");
       } else {
-        navigateTo("/auth/login");
+        navigateTo("/login");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

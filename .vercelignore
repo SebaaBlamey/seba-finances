@@ -1,0 +1,35 @@
+# Dependencies
+node_modules
+.pnpm-debug.log*
+
+# Testing
+coverage
+
+# Next.js
+.next/
+out/
+
+# Production
+build
+
+# Misc
+.DS_Store
+*.tsbuildinfo
+
+# Debug
+*.log
+
+# Local env files
+.env
+.env*.local
+
+# Vercel
+.vercel
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db

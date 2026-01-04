@@ -14,6 +14,17 @@ module.exports = {
       fontFamily: {
         sans: ['Roboto', 'sans-serif'],
       },
+      colors: {
+        // Material Design 3 Colors using CSS variables
+        'surface-container-high': 'var(--surface-container-high)',
+        'on-surface': 'var(--on-surface)',
+        'on-surface-variant': 'var(--on-surface-variant)',
+        'surface-variant': 'var(--surface-variant)',
+        'primary': 'var(--primary)',
+        'on-primary': 'var(--on-primary)',
+        'secondary': 'var(--secondary)',
+        'on-secondary': 'var(--on-secondary)',
+      }
     },
   },
   darkMode: "class",

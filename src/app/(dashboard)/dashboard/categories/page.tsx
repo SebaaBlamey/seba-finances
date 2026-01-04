@@ -9,6 +9,7 @@ import { Plus, Trash2, Edit2 } from "lucide-react";
 import { FAB } from "@/presentation/components/common/FAB";
 import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "@/presentation/utils/animations";
+import { CategoriesGridSkeleton } from "@/presentation/components/common/LoadingComponents";
 import AddCategoryModal from "@/presentation/components/categories/AddCategoryModal";
 import Modal from "@/presentation/components/common/Modal";
 import Button from "@/presentation/components/common/Button";
@@ -98,61 +99,69 @@ export default function CategoriesPage() {
         </p>
       </motion.header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {categories.length === 0 && !loading && (
-          <motion.div 
-            variants={itemVariants} 
-            className="col-span-full text-center py-12 text-on-surface-variant"
-          >
-            <p className="text-body-large">No tienes categorías creadas aún.</p>
-            <p className="text-body-medium mt-2">Usa el botón + para crear una.</p>
-          </motion.div>
+      <motion.div variants={itemVariants}>
+        {loading ? (
+          <CategoriesGridSkeleton count={6} />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {categories.length === 0 ? (
+              <motion.div 
+                variants={itemVariants} 
+                className="col-span-full text-center py-12 text-on-surface-variant"
+              >
+                <p className="text-body-large">No tienes categorías creadas aún.</p>
+                <p className="text-body-medium mt-2">Usa el botón + para crear una.</p>
+              </motion.div>
+            ) : (
+              categories.map((category, index) => (
+                <motion.div
+                  key={category.id}
+                  variants={itemVariants}
+                  custom={index}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card className="bg-surface-container-low hover:bg-surface-container-high transition-colors cursor-pointer group">
+                    <CardBody className="flex flex-row items-center justify-between p-4">
+                      <div className="flex items-center gap-4">
+                        <div className={`h-12 w-12 rounded-[16px] flex items-center justify-center text-2xl bg-${category.color}-container text-on-${category.color}-container`}>
+                          {category.icon}
+                        </div>
+                        <div>
+                          <h3 className="text-title-medium font-medium text-on-surface">{category.name}</h3>
+                          <Chip size="sm" variant="flat" color={category.type === "income" ? "success" : "danger"}>
+                            {category.type === "income" ? "Ingreso" : "Gasto"}
+                          </Chip>
+                        </div>
+                      </div>
+                      
+                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button 
+                          isIconOnly 
+                          variant="ghost" 
+                          onClick={() => openEditModal(category)}
+                          className="text-on-surface-variant hover:bg-surface-variant/20"
+                        >
+                          <Edit2 size={18} />
+                        </Button>
+                        <Button 
+                          isIconOnly 
+                          variant="ghost" 
+                          onClick={() => openDeleteModal(category.id)}
+                          className="text-error hover:bg-error/10"
+                        >
+                          <Trash2 size={18} />
+                        </Button>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </motion.div>
+              ))
+            )}
+          </div>
         )}
-        {categories.map((category, index) => (
-          <motion.div
-            key={category.id}
-            variants={itemVariants}
-            custom={index}
-            initial="visible" // Force visible state for debugging
-            animate="visible"
-          >
-            <Card className="bg-surface-container-low hover:bg-surface-container-high transition-colors cursor-pointer group">
-              <CardBody className="flex flex-row items-center justify-between p-4">
-                <div className="flex items-center gap-4">
-                  <div className={`h-12 w-12 rounded-[16px] flex items-center justify-center text-2xl bg-${category.color}-container text-on-${category.color}-container`}>
-                    {category.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-title-medium font-medium text-on-surface">{category.name}</h3>
-                    <Chip size="sm" variant="flat" color={category.type === "income" ? "success" : "danger"}>
-                      {category.type === "income" ? "Ingreso" : "Gasto"}
-                    </Chip>
-                  </div>
-                </div>
-                
-                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Button 
-                    isIconOnly 
-                    variant="ghost" 
-                    onClick={() => openEditModal(category)}
-                    className="text-on-surface-variant hover:bg-surface-variant/20"
-                  >
-                    <Edit2 size={18} />
-                  </Button>
-                  <Button 
-                    isIconOnly 
-                    variant="ghost" 
-                    onClick={() => openDeleteModal(category.id)}
-                    className="text-error hover:bg-error/10"
-                  >
-                    <Trash2 size={18} />
-                  </Button>
-                </div>
-              </CardBody>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
+      </motion.div>
 
       <motion.div
         className="fixed bottom-6 right-6 z-50"

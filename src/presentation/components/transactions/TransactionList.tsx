@@ -1,6 +1,7 @@
 import React from "react";
 import { Transaction } from "@/core/entities/Transaction";
 import { TransactionItem } from "./TransactionItem";
+import { TransactionsListSkeleton } from "@/presentation/components/common/LoadingComponents";
 import { motion } from "framer-motion";
 
 interface TransactionListProps {
@@ -17,31 +18,47 @@ export const TransactionList: React.FC<TransactionListProps> = ({
   onDelete,
 }) => {
   if (isLoading) {
-    return (
-      <div className="space-y-3">
-        {[1, 2, 3].map((i) => (
-          <div
-            key={i}
-            className="h-20 w-full animate-pulse rounded-[20px] bg-surface-container-highest"
-          />
-        ))}
-      </div>
-    );
+    return <TransactionsListSkeleton count={5} />;
   }
 
   if (transactions.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <div className="mb-4 rounded-full bg-surface-container-highest p-4">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="flex flex-col items-center justify-center py-12 text-center"
+      >
+        <motion.div 
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ 
+            delay: 0.2, 
+            duration: 0.4,
+            type: "spring",
+            stiffness: 200 
+          }}
+          className="mb-4 rounded-full bg-surface-container-highest p-4"
+        >
           <span className="text-4xl">💸</span>
-        </div>
-        <h3 className="text-title-medium font-medium text-on-surface">
+        </motion.div>
+        <motion.h3 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="text-title-medium font-medium text-on-surface"
+        >
           No hay transacciones
-        </h3>
-        <p className="text-body-medium text-on-surface-variant">
+        </motion.h3>
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="text-body-medium text-on-surface-variant"
+        >
           Comienza agregando tu primer ingreso o gasto
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     );
   }
 
