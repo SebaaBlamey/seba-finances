@@ -14,12 +14,20 @@ export default function LoadingSpinner({
   color = "primary"
 }: LoadingSpinnerProps) {
   const heroUISize = size === 'small' ? 'sm' : size === 'large' ? 'lg' : 'md';
+  
+  // Map custom colors to HeroUI supported colors for labelColor
+  const getLabelColor = () => {
+    if (color === "current" || color === "white" || color === "default") return "foreground";
+    return color;
+  };
 
   return (
     <Spinner 
       size={heroUISize}
       color={color}
       className={className}
+      label="Cargando..."
+      labelColor={getLabelColor()}
     />
   );
 }

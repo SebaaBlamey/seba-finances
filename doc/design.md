@@ -1,522 +1,146 @@
-# Diseño de la Aplicación - Registro de Gastos (Inspirado en Apple)
+# Diseño de la Aplicación - Registro de Gastos (Material Design 3)
 
 ## Visión General
-Aplicación web minimalista con diseño inspirado en el ecosistema Apple, priorizando la simplicidad, elegancia y atención al detalle. Uso generoso de espacio en blanco, tipografía refinada y animaciones sutiles pero fluidas.
+Aplicación web moderna y expresiva basada en **Material Design 3 (Material You)**. El diseño prioriza la personalización, la accesibilidad y una experiencia de usuario dinámica mediante el uso de color, tipografía y movimiento. Se busca una interfaz que se sienta viva y adaptable.
 
-## Filosofía de Diseño Apple
-- **Minimalismo elegante:** Menos es más, cada elemento tiene un propósito
-- **Jerarquía visual clara:** Uso de tamaño, peso y espacio para guiar al usuario
-- **Microinteracciones pulidas:** Animaciones suaves y satisfactorias
-- **Glassmorphism y profundidad:** Efectos de vidrio esmerilado y sombras sutiles
-- **Esquinas redondeadas:** Border radius generosos (12-20px)
-- **Espaciado generoso:** Breathing room entre elementos
+## Filosofía de Diseño (Material You)
+- **Personalización y Color:** Uso del sistema de color dinámico de Material 3, donde los colores se derivan de una paleta base y se adaptan al modo claro/oscuro con armonía.
+- **Expresividad:** Uso de formas orgánicas, esquinas redondeadas generosas y tipografía con personalidad.
+- **Movimiento Significativo:** Animaciones fluidas que guían al usuario y comunican cambios de estado.
+- **Accesibilidad:** Contraste adecuado, áreas táctiles grandes y jerarquía visual clara.
+- **Elevación y Profundidad:** Uso de tonos de superficie y sombras sutiles para indicar jerarquía, en lugar de solo sombras.
 
-## Paleta de Colores
+## Paleta de Colores (Sistema Tonal)
 
-### Modo Claro (Predeterminado)
-- **Fondo principal:** #FBFBFD (gris casi blanco, cálido)
-- **Fondo secundario:** #FFFFFF (blanco puro para cards)
-- **Fondo terciario:** #F5F5F7 (gris muy claro para áreas sutiles)
-- **Acento principal:** #007AFF (azul iOS)
-- **Acento secundario:** #5856D6 (púrpura iOS)
-- **Éxito/Ingresos:** #34C759 (verde iOS)
-- **Advertencia/Gastos:** #FF3B30 (rojo iOS)
-- **Texto primario:** #000000 (negro puro)
-- **Texto secundario:** #86868B (gris medio)
-- **Texto terciario:** #C7C7CC (gris claro)
-- **Bordes:** #D1D1D6 (gris muy sutil)
+La paleta se basa en roles semánticos. Los valores hexadecimales son ejemplos de un tema base "Azul/Violeta", pero el sistema está diseñado para ser flexible.
 
-### Modo Oscuro
-- **Fondo principal:** #000000 (negro puro)
-- **Fondo secundario:** #1C1C1E (gris oscuro elevado)
-- **Fondo terciario:** #2C2C2E (gris medio oscuro)
-- **Acento principal:** #0A84FF (azul más brillante)
-- **Texto primario:** #FFFFFF
-- **Texto secundario:** #98989D
-- **Bordes:** #38383A
+### Roles Principales
+- **Primary:** #6750A4 (Acciones principales, FABs, estados activos)
+- **On Primary:** #FFFFFF (Texto/iconos sobre Primary)
+- **Primary Container:** #EADDFF (Fondos de elementos destacados menos prominentes)
+- **On Primary Container:** #21005D (Texto sobre Primary Container)
 
-## Tipografía (Sistema SF Pro)
+### Roles Secundarios
+- **Secondary:** #625B71 (Elementos de menor jerarquía)
+- **On Secondary:** #FFFFFF
+- **Secondary Container:** #E8DEF8
+- **On Secondary Container:** #1D192B
 
-### Fuentes
-```css
-font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-```
+### Roles Terciarios (Acentos de color)
+- **Tertiary:** #7D5260 (Para contrastar y equilibrar)
+- **On Tertiary:** #FFFFFF
+- **Tertiary Container:** #FFD8E4
+- **On Tertiary Container:** #31111D
 
-### Escala Tipográfica
-- **Display Large:** 48px / 700 / -0.5px letter-spacing (títulos hero)
-- **Display:** 36px / 700 / -0.3px (títulos principales)
-- **Title 1:** 28px / 700 / -0.2px (títulos de sección)
-- **Title 2:** 22px / 600 / -0.1px (subtítulos)
-- **Title 3:** 20px / 600 / 0px (encabezados de card)
-- **Body Large:** 17px / 400 / 0px (texto principal)
-- **Body:** 15px / 400 / 0px (texto secundario)
-- **Callout:** 16px / 600 / 0px (botones, labels importantes)
-- **Caption:** 13px / 400 / 0px (metadata, timestamps)
-- **Caption 2:** 11px / 400 / 0px (texto muy pequeño)
+### Superficies y Fondo
+- **Background:** #FFFBFE (Fondo general de la app)
+- **On Background:** #1C1B1F (Texto principal)
+- **Surface:** #FFFBFE (Superficie de cards, sheets)
+- **On Surface:** #1C1B1F
+- **Surface Variant:** #E7E0EC (Bordes, divisores, elementos inactivos)
+- **On Surface Variant:** #49454F (Texto secundario, iconos inactivos)
 
-## Efectos Visuales
+### Semánticos (Error, Éxito - Custom)
+- **Error:** #B3261E
+- **On Error:** #FFFFFF
+- **Error Container:** #F9DEDC
+- **On Error Container:** #410E0B
+- **Success (Custom):** #2E7D32 (Para ingresos)
+- **Success Container:** #B7F397
 
-### Glassmorphism (Efecto Vidrio)
-```css
-background: rgba(255, 255, 255, 0.7);
-backdrop-filter: blur(40px) saturate(180%);
--webkit-backdrop-filter: blur(40px) saturate(180%);
-border: 1px solid rgba(255, 255, 255, 0.3);
-```
+## Tipografía (Roboto / Google Sans)
 
-### Sombras (Sutiles y en capas)
-```css
-/* Elevación baja */
-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 
-            0 1px 4px rgba(0, 0, 0, 0.04);
+Se utiliza la escala tipográfica de Material 3.
 
-/* Elevación media */
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04),
-            0 2px 4px rgba(0, 0, 0, 0.03);
+- **Display Large:** 57px / 64px / -0.25px (Números grandes, intros)
+- **Display Medium:** 45px / 52px / 0px
+- **Headline Large:** 32px / 40px / 0px (Títulos de página)
+- **Headline Medium:** 28px / 36px / 0px (Subtítulos de sección)
+- **Headline Small:** 24px / 32px / 0px
+- **Title Large:** 22px / 28px / 0px (Títulos de cards)
+- **Title Medium:** 16px / 24px / 0.15px
+- **Title Small:** 14px / 20px / 0.1px
+- **Label Large:** 14px / 20px / 0.1px (Botones)
+- **Body Large:** 16px / 24px / 0.5px (Texto principal)
+- **Body Medium:** 14px / 20px / 0.25px (Texto secundario)
 
-/* Elevación alta (modales) */
-box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15),
-            0 12px 24px -8px rgba(0, 0, 0, 0.1);
-```
+## Formas y Esquinas (Shape System)
 
-### Border Radius
-- **Pequeño:** 8px (inputs, badges)
-- **Medio:** 12px (botones, cards pequeños)
-- **Grande:** 16px (cards principales)
-- **Extra grande:** 24px (modales, secciones destacadas)
+- **Extra Small (4px):** Tags pequeños, tooltips.
+- **Small (8px):** Botones rectangulares, text fields, snackbars.
+- **Medium (12px):** Cards pequeñas.
+- **Large (16px):** Cards principales, diálogos pequeños.
+- **Extra Large (28px):** FABs, diálogos grandes, bottom sheets.
+- **Full (9999px):** Botones tipo "pill", badges, sliders.
 
----
+## Componentes Clave
+
+### 1. Botones (M3)
+- **Filled Button (Primary):** Fondo Primary, texto On Primary. Sin sombra en reposo, sombra en hover/focus. Shape: Full (Pill).
+- **Tonal Button (Secondary):** Fondo Secondary Container, texto On Secondary Container.
+- **Outlined Button:** Borde Outline, texto Primary.
+- **Text Button:** Texto Primary, sin borde ni fondo (hasta hover).
+- **FAB (Floating Action Button):** Cuadrado con esquinas muy redondeadas (no círculo perfecto en M3). Primary Container o Primary.
+
+### 2. Cards (M3)
+- **Elevated Card:** Surface color + Sombra suave (Elevation 1).
+- **Filled Card:** Surface Variant color (sin sombra, contraste por color).
+- **Outlined Card:** Surface color + Borde Outline (1px).
+- **Interacción:** State layer (overlay de color) en hover/press.
+
+### 3. Campos de Texto (TextFields)
+- **Filled TextField:** Fondo Surface Variant (con opacidad), línea inferior indicador activo. Esquinas superiores redondeadas.
+- **Outlined TextField:** Borde completo Outline. Esquinas redondeadas (4px).
+
+### 4. Navegación
+- **Navigation Bar (Bottom):** Altura 80px. Indicador de selección en forma de píldora (Pill) alrededor del icono activo.
+- **Navigation Rail (Lateral):** Para tablet/desktop.
 
 ## Estructura de Páginas
 
-### 1. Página de Login/Registro
+### Dashboard
+- **Top App Bar:** Título "Resumen" alineado a la izquierda o centro. Icono de menú o perfil a la derecha. Scroll behavior: pinned o hide-on-scroll.
+- **Hero Section (Balance):** Card grande (Filled o Elevated) mostrando el balance total. Tipografía Display Medium.
+- **Gráficos:** Cards con esquinas redondeadas (Large/XL). Colores del tema para las series de datos.
+- **Lista de Transacciones:** Estilo lista limpia. Iconos con fondo circular (o cuadrado redondeado). Textos con jerarquía clara (Body Large para concepto, Body Medium para fecha).
 
-**Layout:**
-```
-┌─────────────────────────────────────────────┐
-│                                             │
-│              [Logo/Icono]                   │
-│                                             │
-│            Gestiona tus                     │
-│              Finanzas                       │
-│                                             │
-│         [Ilustración minimalista]           │
-│                                             │
-│    ┌─────────────────────────────┐         │
-│    │  Correo electrónico         │         │
-│    └─────────────────────────────┘         │
-│                                             │
-│    ┌─────────────────────────────┐         │
-│    │  Contraseña                 │         │
-│    └─────────────────────────────┘         │
-│                                             │
-│    [  Iniciar Sesión - Botón lleno  ]      │
-│                                             │
-│    [  Crear Cuenta - Botón outline  ]      │
-│                                             │
-│         ¿Olvidaste tu contraseña?          │
-│                                             │
-└─────────────────────────────────────────────┘
-```
+### Modal / Dialogs
+- **Basic Dialog:** Fondo Surface Container High. Esquinas Extra Large (28px). Título Headline Small. Botones de acción (Text Buttons) a la derecha.
+- **Full Screen Dialog:** Para crear transacción en móvil. Transición desde abajo.
 
-**Características:**
-- Fondo con gradiente sutil (blanco a gris muy claro)
-- Logo con efecto de vidrio o ícono SF Symbol estilizado
-- Título Display (48px, bold, negro)
-- Inputs con glassmorphism:
-  - Height: 48px
-  - Border radius: 12px
-  - Background: rgba(255,255,255,0.8)
-  - Border: 1px solid rgba(0,0,0,0.1)
-  - Focus: ring azul iOS (#007AFF) con glow sutil
-- Botón primario:
-  - Background: #007AFF
-  - Color: white
-  - Height: 48px
-  - Border radius: 12px
-  - Font: 16px / 600
-  - Hover: ligero darkening + scale(1.02)
-  - Active: scale(0.98)
-- Botón secundario:
-  - Background: transparent
-  - Border: 2px solid #007AFF
-  - Color: #007AFF
-- Animación de entrada: fade in + slide up suave
+## Animaciones (Motion System)
 
----
-
-### 2. Dashboard Principal
-
-**Layout Desktop:**
-```
-┌──────────────────────────────────────────────────────┐
-│  [Logo]    Dashboard              [Avatar] ▾         │
-├──────────────────────────────────────────────────────┤
-│                                                      │
-│  Balance General                    [Enero 2025] ▾   │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│                                                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌───────────┐ │
-│  │   Ingresos   │  │    Gastos    │  │  Balance  │ │
-│  │              │  │              │  │           │ │
-│  │   $15,420    │  │   $8,230     │  │  $7,190   │ │
-│  │   ↗ +12.5%   │  │   ↘ -5.2%    │  │           │ │
-│  └──────────────┘  └──────────────┘  └───────────┘ │
-│                                                      │
-│  Movimientos Recientes                               │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│                                                      │
-│  [🔍 Buscar]  [Todos ▾]  [+ Nuevo Movimiento]       │
-│                                                      │
-│  ┌────────────────────────────────────────────────┐ │
-│  │ 🍔 Almuerzo con cliente      -$45.00    Hoy    │ │
-│  │ 💼 Pago freelance          +$1,200.00   Ayer   │ │
-│  │ 🚕 Uber al aeropuerto         -$28.50   Ayer   │ │
-│  │ 📱 Suscripción Spotify        -$9.99    15 Ene │ │
-│  └────────────────────────────────────────────────┘ │
-│                                                      │
-└──────────────────────────────────────────────────────┘
-```
-
-**Características del Dashboard:**
-
-#### Header (Altura: 72px)
-- Background: glassmorphism blanco/transparente
-- Sticky position con blur backdrop
-- Logo a la izquierda (iconmark + wordmark)
-- Avatar usuario con dropdown a la derecha
-- Sombra sutil al hacer scroll
-
-#### Cards de Resumen
-- Background: white con sombra sutil
-- Border radius: 16px
-- Padding: 24px
-- Grid: 3 columnas en desktop, stack en mobile
-- Gap: 20px entre cards
-
-**Card de Ingresos:**
-- Icono: ↗ en círculo verde claro
-- Título: "Ingresos" (15px, gris medio)
-- Monto: "$15,420" (32px, bold, negro)
-- Cambio: "+12.5%" (13px, verde, con flecha ↗)
-- Borde izquierdo verde (#34C759, 3px)
-
-**Card de Gastos:**
-- Similar pero con rojo (#FF3B30)
-- Icono: ↘ en círculo rojo claro
-
-**Card de Balance:**
-- Acento azul (#007AFF)
-- Monto más grande (36px)
-- Sin porcentaje de cambio
-
-#### Selector de Mes
-- Pills/Segmented control estilo iOS
-- Background: #F5F5F7
-- Selected: white con sombra
-- Border radius: 10px
-- Smooth transition
-
-#### Lista de Transacciones
-- Cards individuales con hover effect
-- Background: white
-- Border radius: 12px
-- Padding: 16px
-- Separación: 12px
-- Hover: sutil elevación (transform: translateY(-2px))
-
-**Cada Item:**
-- Emoji de categoría (28px) a la izquierda
-- Descripción (16px, bold, negro)
-- Categoría badge debajo (12px, gris)
-- Monto a la derecha (17px, bold)
-  - Verde para ingresos: +$1,200.00
-  - Rojo para gastos: -$45.00
-- Fecha/timestamp (13px, gris claro)
-- Iconos de acción al hover (edit/delete)
-
----
-
-### 3. Modal para Agregar Transacción
-
-**Diseño:**
-```
-┌─────────────────────────────────────┐
-│                                     │
-│  Nueva Transacción          [✕]     │
-│  ─────────────────────────────────  │
-│                                     │
-│  ┌─────────────┬─────────────┐     │
-│  │   Gasto     │   Ingreso   │     │
-│  │  [activo]   │             │     │
-│  └─────────────┴─────────────┘     │
-│                                     │
-│  Monto                              │
-│  ┌───────────────────────────┐     │
-│  │  $  1,234.56              │     │
-│  └───────────────────────────┘     │
-│                                     │
-│  Descripción                        │
-│  ┌───────────────────────────┐     │
-│  │  Almuerzo con cliente     │     │
-│  └───────────────────────────┘     │
-│                                     │
-│  Categoría                          │
-│  ┌───────────────────────────┐     │
-│  │  🍔 Alimentación      ▾   │     │
-│  └───────────────────────────┘     │
-│                                     │
-│  Fecha                              │
-│  ┌───────────────────────────┐     │
-│  │  15 Enero 2025        📅  │     │
-│  └───────────────────────────┘     │
-│                                     │
-│  [        Guardar         ]         │
-│                                     │
-└─────────────────────────────────────┘
-```
-
-**Características:**
-- Modal centrado con backdrop blur oscuro
-- Width: 440px (desktop)
-- Background: white puro
-- Border radius: 24px
-- Padding: 32px
-- Animación de entrada: scale(0.95) → scale(1) + fade
-- Sombra dramática pero elegante
-
-**Segmented Control (Tipo):**
-- Height: 40px
-- Background: #F5F5F7
-- Selected: white con sombra interna
-- Transition suave (300ms cubic-bezier)
-
-**Inputs:**
-- Height: 48px
-- Border: 1px solid #D1D1D6
-- Border radius: 10px
-- Focus: border #007AFF + ring azul sutil
-- Padding: 12px 16px
-- Font size: 16px
-
-**Botón Guardar:**
-- Full width
-- Height: 48px
-- Background: gradiente azul (#007AFF → #0056CC)
-- Color: white
-- Border radius: 12px
-- Font: 16px / 600
-- Hover: brillo + elevación
-- Active: scale down
-- Disabled: opacity 0.5
-
----
-
-### 4. Header/Navegación
-
-**Desktop:**
-- Height: 72px
-- Background: glassmorphism
-- Blur backdrop cuando hay scroll
-- Max-width: 1200px centrado
-- Padding horizontal: 32px
-
-**Elementos:**
-- Logo + nombre (izquierda)
-- Nav links (centro) - opcional para futuro
-- Search bar (centro-derecha) - opcional
-- Avatar + dropdown (derecha)
-
-**Avatar Dropdown:**
-- Border radius: 50%
-- Border: 2px solid white
-- Box shadow sutil
-- Dropdown con backdrop blur
-- Border radius: 16px
-- Padding: 8px
-- Items con hover background
-
----
-
-## Diseño Responsive
-
-### Desktop (≥1024px)
-- Max width: 1200px centrado
-- Cards en grid de 3 columnas
-- Sidebar opcional con navegación
-
-### Tablet (768px - 1023px)
-- Cards en grid de 2 columnas
-- Balance card full width arriba
-
-### Mobile (<768px)
-- Stack vertical completo
-- Header con logo pequeño + hamburger
-- Cards apilados con padding reducido
-- Botón flotante para agregar (fab):
-  - Position: fixed bottom-right
-  - Size: 56px × 56px
-  - Border radius: 28px
-  - Background: gradiente azul
-  - Icon: + (blanco, 24px)
-  - Shadow: flotante
-  - Hover: scale(1.1)
-
----
-
-## Animaciones y Transiciones
-
-### Principios
-- **Timing:** 300-500ms para UI, 150-200ms para feedback
-- **Easing:** cubic-bezier(0.4, 0.0, 0.2, 1) (ease-out estándar)
-- **Spring:** Para animaciones más naturales (react-spring)
-
-### Micro-interacciones
-
-**Botones:**
-```css
-transition: all 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
-
-:hover {
-  transform: scale(1.02);
-  box-shadow: /* sombra más pronunciada */;
-}
-
-:active {
-  transform: scale(0.98);
-}
-```
-
-**Cards:**
-```css
-transition: transform 300ms ease, box-shadow 300ms ease;
-
-:hover {
-  transform: translateY(-4px);
-  box-shadow: /* elevación mayor */;
-}
-```
-
-**Modals:**
-- Entrada: fade in + scale(0.95 → 1)
-- Salida: fade out + scale(1 → 0.95)
-- Backdrop: fade in/out
-- Duration: 300ms
-
-**Lista items:**
-- Stagger animation al cargar (cascade)
-- Delay entre items: 50ms
-- Smooth delete con slide out
-
----
+- **Easing:** `Standard` (cubic-bezier(0.2, 0.0, 0, 1.0)) para la mayoría de movimientos. `Emphasized` para elementos destacados.
+- **Duración:**
+  - Corta: 200ms (iconos, selecciones)
+  - Media: 400ms (expansión de cards, diálogos)
+  - Larga: 600ms+ (transiciones de pantalla completa)
+- **Container Transform:** Transición suave de un elemento (ej. FAB o lista) a una página de detalle o modal.
+- **Shared Axis:** Para navegación entre páginas (eje X, Y o Z).
 
 ## Iconografía
+- **Material Symbols (Rounded o Sharp):** Preferiblemente la variante Rounded para coincidir con el estilo M3.
+- **Fill:** Rellenos para estados activos, contornos para inactivos.
 
-### Sistema SF Symbols (Estilo)
-- Usar lucide-react con estilo redondeado
-- Tamaños:
-  - Small: 16px
-  - Medium: 20px
-  - Large: 24px
-  - XLarge: 32px
-- Stroke width: 2px (más grueso que default)
-- Color: heredado del texto o acento
+## Implementación Técnica (Tailwind)
 
-### Iconos por Categoría
-- 🍔 Alimentación
-- 🚗 Transporte
-- 🎬 Entretenimiento
-- 💡 Servicios
-- 🏥 Salud
-- 🛍️ Compras
-- 💼 Trabajo/Freelance
-- 📈 Inversiones
+Se extenderá la configuración de Tailwind para incluir los tokens de color y tipografía de Material 3.
 
----
-
-## Estados Especiales
-
-### Loading
-- Skeleton screens con shimmer effect
-- Color: gradiente de gris muy claro
-- Animation: shimmer de izquierda a derecha
-- Border radius coincide con elemento final
-
-### Empty State
-- Ilustración SF Symbol grande (120px)
-- Color: gris claro (#C7C7CC)
-- Título: "No hay movimientos"
-- Subtítulo: "Agrega tu primera transacción"
-- Botón CTA destacado
-
-### Error State
-- Icono de alerta (⚠️) en rojo
-- Mensaje claro y conciso
-- Botón "Reintentar"
-- No usar lenguaje técnico
-
----
-
-## Accesibilidad (Apple Standards)
-
-- **Contraste:** WCAG AAA (7:1 para texto normal)
-- **Focus indicators:** Ring azul de 3px con blur
-- **Touch targets:** Mínimo 44×44px
-- **Reduce motion:** Respetar prefers-reduced-motion
-- **Dark mode:** Automático según sistema
-- **Screen readers:** Labels semánticos, ARIA cuando necesario
-- **Keyboard navigation:** Tab order lógico, shortcuts
-
----
-
-## Detalles de Implementación
-
-### Tailwind Config Personalizado
-```js
+```javascript
+// tailwind.config.js (ejemplo conceptual)
 theme: {
-  extend: {
-    fontFamily: {
-      sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', ...],
-    },
-    colors: {
-      ios: {
-        blue: '#007AFF',
-        green: '#34C759',
-        red: '#FF3B30',
-        // ...
-      },
-    },
-    borderRadius: {
-      'ios': '10px',
-      'ios-lg': '16px',
-      'ios-xl': '24px',
-    },
-    boxShadow: {
-      'ios': '0 4px 8px rgba(0, 0, 0, 0.04)',
-      'ios-lg': '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
-    },
+  colors: {
+    primary: '#6750A4',
+    'on-primary': '#FFFFFF',
+    'primary-container': '#EADDFF',
+    // ... resto de la paleta
   },
+  fontFamily: {
+    sans: ['Roboto', 'sans-serif'],
+  },
+  borderRadius: {
+    'xl': '28px', // M3 Extra Large
+    'pill': '9999px',
+  }
 }
 ```
-
-### Framer Motion para Animaciones
-```jsx
-<motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.3, ease: [0.4, 0.0, 0.2, 1] }}
->
-  {/* Contenido */}
-</motion.div>
-```
-
----
-
-## Referencias Visuales Apple
-
-- **Diseño de Cards:** Apple Card app
-- **Glassmorphism:** iOS Control Center
-- **Tipografía:** apple.com, iOS Settings
-- **Animaciones:** App Store transiciones
-- **Color scheme:** iOS Human Interface Guidelines
-- **Spacing:** Sistema de 8px (4, 8, 12, 16, 24, 32, 48, 64)

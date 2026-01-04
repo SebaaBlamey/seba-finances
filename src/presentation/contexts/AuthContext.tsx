@@ -7,6 +7,7 @@ import { LoginUserUseCase } from "@/core/use-cases/auth/LoginUser";
 import { RegisterUserUseCase } from "@/core/use-cases/auth/RegisterUser";
 import { LogoutUserUseCase } from "@/core/use-cases/auth/LogoutUser";
 import { Result } from "@/core/types/Result";
+import { useNavigation } from "../hooks/useNavigation";
 
 interface AuthContextType {
   user: User | null;
@@ -25,6 +26,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const { navigateTo } = useNavigation();
 
   const authRepository = new SupabaseAuthRepository(supabase);
   const loginUseCase = new LoginUserUseCase(authRepository);
@@ -64,6 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   ): Promise<Result<void>> => {
     try {
       await loginUseCase.execute(email, password);
+      navigateTo("/dashboard");
       return { success: true, data: undefined };
     } catch (err) {
       return {

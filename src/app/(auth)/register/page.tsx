@@ -7,6 +7,7 @@ import LoadingSpinner from "@/presentation/components/common/LoadingSpinner";
 import { useAuth } from "@/presentation/contexts/AuthContext";
 import { useState } from "react";
 import { useNavigation } from "@/presentation/hooks/useNavigation";
+import { Wallet, User, Mail, Lock } from "lucide-react";
 
 export default function RegisterPage() {
   const { signUp } = useAuth();
@@ -35,32 +36,21 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-default-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <div className="w-full max-w-md space-y-8">
         {/* Logo/Header */}
         <div className="text-center space-y-4">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-primary rounded-3xl shadow-lg">
-            <svg
-              className="w-8 h-8 text-white"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-              <path
-                fillRule="evenodd"
-                d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                clipRule="evenodd"
-              />
-            </svg>
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-container rounded-[28px] shadow-sm">
+            <Wallet className="w-10 h-10 text-on-primary-container" />
           </div>
           <div>
-            <h1 className="text-4xl font-bold text-foreground">Finanzas</h1>
-            <p className="text-default-500 text-lg">Crea tu cuenta</p>
+            <h1 className="text-[45px] leading-[52px] font-normal text-on-surface">Finanzas</h1>
+            <p className="text-on-surface-variant text-lg">Crea tu cuenta</p>
           </div>
         </div>
 
         {/* Register Form */}
-        <Card className="shadow-large">
+        <Card className="bg-surface-container-low shadow-md rounded-[28px]">
           <CardBody className="p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-1">
@@ -72,19 +62,15 @@ export default function RegisterPage() {
                   onChange={(e) => setName(e.target.value)}
                   isRequired
                   isDisabled={loading}
-                  startContent={
-                    <svg
-                      className="w-4 h-4 text-default-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  }
+                  variant="flat"
+                  radius="sm"
+                  labelPlacement="inside"
+                  startContent={<User className="w-4 h-4 text-on-surface-variant" />}
+                  classNames={{
+                    inputWrapper: "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
+                    label: "text-on-surface-variant",
+                    input: "text-on-surface",
+                  }}
                 />
               </div>
 
@@ -97,16 +83,15 @@ export default function RegisterPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   isRequired
                   isDisabled={loading}
-                  startContent={
-                    <svg
-                      className="w-4 h-4 text-default-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                    </svg>
-                  }
+                  variant="flat"
+                  radius="sm"
+                  labelPlacement="inside"
+                  startContent={<Mail className="w-4 h-4 text-on-surface-variant" />}
+                  classNames={{
+                    inputWrapper: "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
+                    label: "text-on-surface-variant",
+                    input: "text-on-surface",
+                  }}
                 />
               </div>
 
@@ -119,42 +104,40 @@ export default function RegisterPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   isRequired
                   isDisabled={loading}
-                  startContent={
-                    <svg
-                      className="w-4 h-4 text-default-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  }
+                  variant="flat"
+                  radius="sm"
+                  labelPlacement="inside"
+                  startContent={<Lock className="w-4 h-4 text-on-surface-variant" />}
+                  classNames={{
+                    inputWrapper: "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
+                    label: "text-on-surface-variant",
+                    input: "text-on-surface",
+                  }}
                 />
               </div>
 
               {error && (
-                <div className="p-3 rounded-lg bg-danger-50 border border-danger-200">
-                  <p className="text-danger text-sm">{error}</p>
+                <div className="p-4 rounded-xl bg-error-container text-on-error-container">
+                  <p className="text-sm font-medium">{error}</p>
                 </div>
               )}
 
-              <div className="space-y-4">
+              <div className="flex flex-col gap-3 pt-2">
                 <Button
                   type="submit"
                   isDisabled={loading}
-                  className="w-full"
+                  className="w-full font-medium"
                   size="lg"
+                  radius="full"
                 >
-                  {loading ? <LoadingSpinner size="small" /> : "Crear Cuenta"}
+                  {loading ? <LoadingSpinner size="small" color="white" /> : "Crear Cuenta"}
                 </Button>
 
                 <Button
-                  variant="secondary"
-                  className="w-full"
+                  variant="ghost"
+                  className="w-full font-medium text-primary"
                   size="lg"
+                  radius="full"
                   onPress={() => navigateTo("/login")}
                 >
                   Ya tengo cuenta

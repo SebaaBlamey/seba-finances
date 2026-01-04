@@ -3,6 +3,7 @@ import { Card, CardBody, Button, Input } from "@heroui/react";
 import { useAuth } from "@/presentation/contexts/AuthContext";
 import { useState } from "react";
 import { useNavigation } from "@/presentation/hooks/useNavigation";
+import { Wallet } from "lucide-react";
 
 export default function LoginPage() {
   const { signIn } = useAuth();
@@ -27,30 +28,19 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-600 rounded-3xl shadow-lg mb-4">
-            <svg
-              className="w-8 h-8 text-white"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-              <path
-                fillRule="evenodd"
-                d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                clipRule="evenodd"
-              />
-            </svg>
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-container rounded-[28px] shadow-sm mb-6">
+            <Wallet className="w-10 h-10 text-on-primary-container" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900">Finanzas</h1>
-          <p className="text-gray-600 text-lg">Bienvenido de nuevo</p>
+          <h1 className="text-[45px] leading-[52px] font-normal text-on-surface mb-2">Finanzas</h1>
+          <p className="text-on-surface-variant text-lg">Bienvenido de nuevo</p>
         </div>
 
         {/* Login Form */}
-        <Card>
+        <Card className="bg-surface-container-low shadow-md rounded-[28px]">
           <CardBody className="p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               <Input
@@ -61,6 +51,14 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 isRequired
                 isDisabled={loading}
+                variant="flat"
+                radius="sm"
+                labelPlacement="inside"
+                classNames={{
+                  inputWrapper: "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
+                  label: "text-on-surface-variant",
+                  input: "text-on-surface",
+                }}
               />
 
               <Input
@@ -71,32 +69,44 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 isRequired
                 isDisabled={loading}
+                variant="flat"
+                radius="sm"
+                labelPlacement="inside"
+                classNames={{
+                  inputWrapper: "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
+                  label: "text-on-surface-variant",
+                  input: "text-on-surface",
+                }}
               />
 
               {error && (
-                <div className="p-3 rounded-lg bg-red-50 border border-red-200">
-                  <p className="text-red-600 text-sm">{error}</p>
+                <div className="p-4 rounded-xl bg-error-container text-on-error-container">
+                  <p className="text-sm font-medium">{error}</p>
                 </div>
               )}
 
-              <Button
-                type="submit"
-                color="primary"
-                size="lg"
-                className="w-full"
-                isDisabled={loading}
-              >
-                {loading ? "Cargando..." : "Iniciar Sesión"}
-              </Button>
+              <div className="flex flex-col gap-3 pt-2">
+                <Button
+                  type="submit"
+                  color="primary"
+                  size="lg"
+                  className="w-full font-medium"
+                  radius="full"
+                  isDisabled={loading}
+                >
+                  {loading ? "Cargando..." : "Iniciar Sesión"}
+                </Button>
 
-              <Button
-                variant="bordered"
-                size="lg"
-                className="w-full"
-                onPress={() => navigateTo("/register")}
-              >
-                Crear Cuenta
-              </Button>
+                <Button
+                  variant="bordered"
+                  size="lg"
+                  className="w-full font-medium border-outline text-primary"
+                  radius="full"
+                  onPress={() => navigateTo("/register")}
+                >
+                  Crear Cuenta
+                </Button>
+              </div>
             </form>
           </CardBody>
         </Card>

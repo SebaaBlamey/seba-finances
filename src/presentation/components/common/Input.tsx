@@ -41,9 +41,15 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         label={label}
         errorMessage={error}
         isInvalid={!!error}
-        variant="bordered"
-        radius="lg"
+        variant="flat" // M3 uses filled/flat style for inputs usually, or outlined
+        radius="sm" // M3 text fields have small top radius if filled, or small radius if outlined
         size="lg"
+        labelPlacement="inside"
+        classNames={{
+          inputWrapper: "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
+          label: "text-on-surface-variant",
+          input: "text-on-surface",
+        }}
         color={error ? "danger" : "primary"}
         {...props}
       />

@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --background: #FBFBFD;
-  --foreground: #000000;
+  --background: #FFFBFE;
+  --foreground: #1C1B1F;
 }
 
 [data-theme="dark"] {
-  --background: #000000;
-  --foreground: #FFFFFF;
+  --background: #1C1B1F;
+  --foreground: #E6E1E5;
 }
 
 html,
@@ -21,7 +21,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

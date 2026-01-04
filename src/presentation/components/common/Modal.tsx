@@ -1,14 +1,14 @@
 "use client";
 
-import { 
-  Modal as HeroUIModal, 
-  ModalContent, 
-  ModalHeader, 
-  ModalBody, 
+import {
+  Modal as HeroUIModal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
   ModalFooter,
-  Button
+  Button,
 } from "@heroui/react";
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -18,18 +18,30 @@ interface ModalProps {
   children: ReactNode;
   className?: string;
   footer?: ReactNode;
-  size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "full";
+  size?:
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "2xl"
+    | "3xl"
+    | "4xl"
+    | "5xl"
+    | "full";
+  backdrop?: "transparent" | "opaque" | "blur";
 }
 
-export default function Modal({ 
-  isOpen, 
-  onClose, 
+export default function Modal({
+  isOpen,
+  onClose,
   onOpenChange,
-  title, 
-  children, 
-  className = '',
+  title,
+  children,
+  className = "",
   footer,
-  size = "md"
+  backdrop = "blur",
+  size = "md",
 }: ModalProps) {
   const handleOpenChange = (open: boolean) => {
     if (onOpenChange) {
@@ -40,17 +52,39 @@ export default function Modal({
   };
 
   return (
-    <HeroUIModal 
-      isOpen={isOpen} 
+    <HeroUIModal
+      isOpen={isOpen}
       onOpenChange={handleOpenChange}
       size={size}
       className={className}
-      backdrop="blur"
+      backdrop={backdrop}
+      radius="lg" // M3 uses large radius for dialogs (28px usually, but lg is close)
       classNames={{
-        base: "bg-white dark:bg-default-100",
-        header: "border-b-[1px] border-gray-200",
-        body: "py-6",
-        footer: "border-t-[1px] border-gray-200",
+        base: "bg-surface-container-high dark:bg-surface-container-high shadow-xl",
+        header: "border-b-0 pb-2",
+        body: "py-4",
+        footer: "border-t-0 pt-2",
+        closeButton: "hover:bg-surface-variant/20 active:bg-surface-variant/30",
+      }}
+      motionProps={{
+        variants: {
+          enter: {
+            scale: 1,
+            opacity: 1,
+            transition: {
+              duration: 0.4,
+              ease: [0.2, 0.0, 0, 1.0], // M3 Standard Easing
+            },
+          },
+          exit: {
+            scale: 0.95,
+            opacity: 0,
+            transition: {
+              duration: 0.2,
+              ease: [0.2, 0.0, 0, 1.0],
+            },
+          },
+        },
       }}
     >
       <ModalContent>
@@ -58,17 +92,11 @@ export default function Modal({
           <>
             {title && (
               <ModalHeader className="flex flex-col gap-1">
-                <h2 className="text-xl font-semibold">{title}</h2>
+                <h2 className="text-2xl font-normal text-on-surface">{title}</h2>
               </ModalHeader>
             )}
-            <ModalBody>
-              {children}
-            </ModalBody>
-            {footer && (
-              <ModalFooter>
-                {footer}
-              </ModalFooter>
-            )}
+            <ModalBody className="text-on-surface-variant">{children}</ModalBody>
+            {footer && <ModalFooter>{footer}</ModalFooter>}
           </>
         )}
       </ModalContent>
