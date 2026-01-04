@@ -2,10 +2,10 @@
 import LoadingSpinner from "@/presentation/components/common/LoadingSpinner";
 import Modal from "@/presentation/components/common/Modal";
 import Header from "@/presentation/components/layout/Header";
+import Sidebar from "@/presentation/components/layout/Sidebar";
 import Button from "@/presentation/components/common/Button";
 import { useAuth } from "@/presentation/contexts/AuthContext";
 import { useNavigation } from "@/presentation/hooks/useNavigation";
-import { ModalFooter } from "@heroui/react";
 import { useEffect, useState } from "react";
 
 interface DashboardLayoutProps {
@@ -37,8 +37,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   useEffect(() => {
     if (!loading && !user) {
-      navigateTo("/login");
+      navigateTo("/auth/login");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading]);
 
   if (loading) {
@@ -54,20 +55,21 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header onSignOutClick={handleSignOutclick} mLoading={mloading} />
-      <div className="flex">
-        <main className="flex-1 p-6 lg:p-8">{children}</main>
+    <div className="min-h-screen bg-background flex">
+      {/* Sidebar for Desktop */}
+      <Sidebar />
+      
+      <div className="flex-1 flex flex-col min-w-0">
+        <Header onSignOutClick={handleSignOutclick} mLoading={mloading} />
+        <main className="flex-1 p-6 lg:p-8 overflow-y-auto">{children}</main>
       </div>
+
       <Modal
         isOpen={signOutModalOpen}
         onClose={handleCancelSignOut}
-        title="Confirmar cierre de sesión"
-        backdrop="blur"
-      >
-        <p className="text-body-large text-on-surface-variant">¿Estás seguro de que quieres cerrar tu sesión?</p>
-        <ModalFooter>
-          <div className="flex gap-2 justify-end w-full">
+        title="Cerrar Sesión"
+        footer={
+          <>
             <Button
               variant="ghost"
               onClick={handleCancelSignOut}
@@ -83,8 +85,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             >
               {loading ? "Cerrando..." : "Cerrar sesión"}
             </Button>
-          </div>
-        </ModalFooter>
+          </>
+        }
+      >
+        <p className="text-body-large text-on-surface-variant">¿Estás seguro de que quieres cerrar tu sesión?</p>
       </Modal>
     </div>
   );

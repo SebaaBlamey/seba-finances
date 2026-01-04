@@ -8,7 +8,8 @@ import { ReactNode } from "react";
 
 interface ButtonProps extends Omit<HeroUIButtonProps, "variant"> {
   children: ReactNode;
-  onClick?: () => void;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onClick?: (() => void) | (() => Promise<void>) | ((e: any) => void) | ((e: any) => Promise<void>);
   variant?: "primary" | "secondary" | "tertiary" | "danger" | "ghost";
   disabled?: boolean;
   type?: "button" | "submit";
@@ -46,7 +47,7 @@ export default function Button({
   return (
     <HeroUIButton
       type={type}
-      onPress={onClick ? () => onClick() : undefined}
+      onPress={onClick ? (e) => onClick(e) : undefined}
       isDisabled={disabled}
       variant={heroUIVariant}
       color={color}

@@ -2,9 +2,10 @@
 
 import { useAuth } from "@/presentation/contexts/AuthContext";
 import Dropdown from "@/presentation/components/common/Dropdown";
-import { User, Menu } from "lucide-react";
-import Sidebar from "./Sidebar";
+import { User, Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@heroui/react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 interface HeaderProps {
   onSignOutClick: () => void;
@@ -13,6 +14,17 @@ interface HeaderProps {
 
 export default function Header({ onSignOutClick, mLoading }: HeaderProps) {
   const { user } = useAuth();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   const dropdownOptions = [
     {
@@ -32,22 +44,24 @@ export default function Header({ onSignOutClick, mLoading }: HeaderProps) {
   ];
 
   return (
-    <header className="bg-surface/80 backdrop-blur-md sticky top-0 z-50 border-b border-surface-variant/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="bg-surface/80 backdrop-blur-md sticky top-0 z-30 border-b border-surface-variant/20">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-4">
-            <Sidebar />
+            {/* Mobile menu trigger is now handled in Sidebar component but we keep the title */}
             <h1 className="text-xl font-medium text-on-surface">
               Finanzas de <strong className="text-primary">{user?.name}</strong>
             </h1>
           </div>
-          
+
           <div className="flex items-center gap-4">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               className="hidden sm:flex text-on-surface-variant hover:text-primary"
+              onPress={toggleTheme}
+              isIconOnly
             >
-              Modo Oscuro
+              {mounted && theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
             </Button>
             <Dropdown
               trigger={

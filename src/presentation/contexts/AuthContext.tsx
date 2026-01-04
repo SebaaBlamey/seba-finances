@@ -28,37 +28,49 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const { navigateTo } = useNavigation();
 
+  // Use useMemo or define outside component if possible, but here it's fine as long as supabase client is stable
   const authRepository = new SupabaseAuthRepository(supabase);
   const loginUseCase = new LoginUserUseCase(authRepository);
   const registerUseCase = new RegisterUserUseCase(authRepository);
   const logoutUseCase = new LogoutUserUseCase(authRepository);
 
   useEffect(() => {
+    let mounted = true;
+
     // validar sesion actual
-    authRepository.getCurrentUser().then((user) => {
-      if (user) {
-        setUser(user);
+    authRepository.getCurrentUser().then((currentUser) => {
+      if (mounted) {
+        if (currentUser) {
+          setUser(currentUser);
+        }
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     // login/logout listener
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        setUser({
-          id: session.user.id,
-          name: session.user.user_metadata.full_name || "",
-          email: session.user.email || "",
-          createdAt: new Date(session.user.created_at),
-        });
-      } else {
-        setUser(null);
+      if (mounted) {
+        if (session?.user) {
+          setUser({
+            id: session.user.id,
+            name: session.user.user_metadata.full_name || "",
+            email: session.user.email || "",
+            createdAt: new Date(session.user.created_at),
+          });
+        } else {
+          setUser(null);
+        }
       }
     });
-    return () => subscription.unsubscribe();
-  });
+    
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Empty dependency array to run only once
 
   const signIn = async (
     email: string,

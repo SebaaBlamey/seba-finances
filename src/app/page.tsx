@@ -14,9 +14,10 @@ export default function HomePage() {
       if (user) {
         navigateTo("/dashboard");
       } else {
-        navigateTo("/login");
+        navigateTo("/auth/login");
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading]);
 
   return (
