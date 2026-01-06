@@ -96,7 +96,8 @@ export default function AddTransactionModal({
       };
 
       if (initialData) {
-        await onSave(transactionData, initialData.id);
+        const { userId, ...updateData } = transactionData;
+        await onSave(updateData, initialData.id);
       } else {
         await onSave(transactionData);
       }
