@@ -717,7 +717,6 @@ export default function TransactionForm({ onClose }: { onClose: () => void }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Campos del formulario */}
     </form>
   );
 }
