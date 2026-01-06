@@ -11,7 +11,7 @@ import { Select, SelectItem } from "@heroui/react";
 interface AddTransactionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: CreateTransactionDTO | UpdateTransactionDTO) => Promise<void>;
+  onSave: (data: CreateTransactionDTO | UpdateTransactionDTO, id?: string) => Promise<void>;
   initialData?: Transaction | null;
 }
 
@@ -96,7 +96,7 @@ export default function AddTransactionModal({
       };
 
       if (initialData) {
-        await onSave({ ...transactionData, id: initialData.id } as UpdateTransactionDTO);
+        await onSave(transactionData, initialData.id);
       } else {
         await onSave(transactionData);
       }

@@ -55,13 +55,13 @@ export default function TransactionsPage() {
     }
   };
 
-  const handleSave = async (data: CreateTransactionDTO | UpdateTransactionDTO) => {
+  const handleSave = async (data: CreateTransactionDTO | UpdateTransactionDTO, id?: string) => {
     try {
-      if ('id' in data) {
+      if (id) {
         // Update
-        const updatedTransaction = await transactionRepository.update(data.id as string, data as UpdateTransactionDTO);
+        const updatedTransaction = await transactionRepository.update(id, data as UpdateTransactionDTO);
         setTransactions((prev) => 
-          prev.map((t) => (t.id === data.id ? updatedTransaction : t))
+          prev.map((t) => (t.id === id ? updatedTransaction : t))
         );
       } else {
         // Create
