@@ -60,7 +60,7 @@ export default function Sidebar() {
       </Drawer>
 
       {/* Desktop Sidebar - Static relative positioning */}
-      <div className="hidden lg:block w-80 bg-surface-container-low border-r border-surface-variant/20 min-h-screen pt-20">
+      <div className="hidden lg:block w-80 bg-surface-container-low border-r border-outline-variant min-h-screen pt-20">
         <NavContent pathname={pathname} setIsOpen={setIsOpen} />
       </div>
     </>

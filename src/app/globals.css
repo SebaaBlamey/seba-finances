@@ -42,7 +42,7 @@
   --scrim: #000000;
 }
 
-[data-theme="dark"] {
+.dark {
   --background: #1C1B1F;
   --foreground: #E6E1E5;
   

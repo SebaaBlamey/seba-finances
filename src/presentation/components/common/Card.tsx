@@ -8,7 +8,7 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = "elevated", ...props }, ref) => {
     const variants = {
-      elevated: "bg-surface-container-low shadow-md",
+      elevated: "bg-surface-container-low dark:bg-surface-container shadow-md dark:shadow-none",
       filled: "bg-surface-container-highest",
       outlined: "bg-surface border border-outline-variant",
     };
