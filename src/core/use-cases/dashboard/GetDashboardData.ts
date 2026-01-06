@@ -4,6 +4,8 @@ import { ITransactionRepository } from "@/core/repositories/ITransactionReposito
 export interface DashboardData {
   monthlySummary: MonthlySummary;
   recentTransactions: Transaction[];
+  incomeChangePercentage: number;
+  expenseChangePercentage: number;
 }
 
 export class GetDashboardDataUseCase {
@@ -11,19 +13,47 @@ export class GetDashboardDataUseCase {
 
   async execute(userId: string): Promise<DashboardData> {
     const now = new Date();
-    const month = now.getMonth() + 1; // getMonth() is 0-based
-    const year = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+    const currentYear = now.getFullYear();
 
-    const [monthlySummary, allTransactions] = await Promise.all([
-      this.transactionRepository.getMonthlySummary(userId, month, year),
+    let previousMonth = currentMonth - 1;
+    let previousYear = currentYear;
+    
+    if (previousMonth === 0) {
+      previousMonth = 12;
+      previousYear = currentYear - 1;
+    }
+
+    const [monthlySummary, previousMonthlySummary, allTransactions] = await Promise.all([
+      this.transactionRepository.getMonthlySummary(userId, currentMonth, currentYear),
+      this.transactionRepository.getMonthlySummary(userId, previousMonth, previousYear),
       this.transactionRepository.getAll(userId),
     ]);
 
     const recentTransactions = allTransactions.slice(0, 10);
 
+    const incomeChangePercentage = this.calculatePercentageChange(
+      previousMonthlySummary.totalIncome,
+      monthlySummary.totalIncome
+    );
+
+    const expenseChangePercentage = this.calculatePercentageChange(
+      previousMonthlySummary.totalExpenses,
+      monthlySummary.totalExpenses
+    );
+
     return {
       monthlySummary,
       recentTransactions,
+      incomeChangePercentage,
+      expenseChangePercentage,
     };
+  }
+
+  private calculatePercentageChange(previousValue: number, currentValue: number): number {
+    if (previousValue === 0) {
+      return currentValue > 0 ? 100 : 0;
+    }
+    return ((currentValue - previousValue) / previousValue) * 100;
   }
 }

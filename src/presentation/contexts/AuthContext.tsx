@@ -28,7 +28,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const { navigateTo } = useNavigation();
 
-  // Use useMemo or define outside component if possible, but here it's fine as long as supabase client is stable
   const authRepository = new SupabaseAuthRepository(supabase);
   const loginUseCase = new LoginUserUseCase(authRepository);
   const registerUseCase = new RegisterUserUseCase(authRepository);
@@ -37,7 +36,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     let mounted = true;
 
-    // validar sesion actual
     authRepository.getCurrentUser().then((currentUser) => {
       if (mounted) {
         if (currentUser) {
@@ -47,7 +45,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     });
 
-    // login/logout listener
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -64,13 +61,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
     });
-    
+
     return () => {
       mounted = false;
       subscription.unsubscribe();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty dependency array to run only once
+  }, []);
 
   const signIn = async (
     email: string,

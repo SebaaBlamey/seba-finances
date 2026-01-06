@@ -29,7 +29,7 @@ export default function PageLoading({
           transition={{ delay: 0.1 }}
           className="mb-6"
         >
-          <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center text-on-primary text-2xl font-bold">
+          <div className="w-16 h-16 rounded-2xl bg-primary dark:bg-dark-primary flex items-center justify-center text-on-primary dark:text-dark-on-primary text-2xl font-bold">
             F
           </div>
         </motion.div>
@@ -43,11 +43,11 @@ export default function PageLoading({
         transition={{ delay: 0.3 }}
         className="text-center mt-6 space-y-2"
       >
-        <h3 className="text-title-large font-medium text-on-surface">
+        <h3 className="text-title-large font-medium text-on-surface dark:text-dark-on-surface">
           {title}
         </h3>
         {subtitle && (
-          <p className="text-body-medium text-on-surface-variant max-w-sm">
+          <p className="text-body-medium text-on-surface-variant dark:text-dark-on-surface-variant max-w-sm">
             {subtitle}
           </p>
         )}

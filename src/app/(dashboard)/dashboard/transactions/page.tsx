@@ -3,7 +3,11 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/presentation/contexts/AuthContext";
 import { SupabaseTransactionRepository } from "@/infraestructure/repositories/SupabaseTransactionRepository";
-import { Transaction, CreateTransactionDTO, UpdateTransactionDTO } from "@/core/entities/Transaction";
+import {
+  Transaction,
+  CreateTransactionDTO,
+  UpdateTransactionDTO,
+} from "@/core/entities/Transaction";
 import { TransactionList } from "@/presentation/components/transactions/TransactionList";
 import AddTransactionModal from "@/presentation/components/transactions/AddTransactionModal";
 import Modal from "@/presentation/components/common/Modal";
@@ -17,7 +21,10 @@ import {
   Button,
 } from "@heroui/react";
 import { motion } from "framer-motion";
-import { containerVariants, itemVariants } from "@/presentation/utils/animations";
+import {
+  containerVariants,
+  itemVariants,
+} from "@/presentation/utils/animations";
 
 export default function TransactionsPage() {
   const { user } = useAuth();
@@ -25,10 +32,13 @@ export default function TransactionsPage() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
-  const [transactionToDelete, setTransactionToDelete] = useState<string | null>(null);
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<Transaction | null>(null);
+  const [transactionToDelete, setTransactionToDelete] = useState<string | null>(
+    null,
+  );
   const [filterType, setFilterType] = useState<"all" | "income" | "expense">(
-    "all"
+    "all",
   );
 
   const transactionRepository = new SupabaseTransactionRepository();
@@ -55,17 +65,23 @@ export default function TransactionsPage() {
     }
   };
 
-  const handleSave = async (data: CreateTransactionDTO | UpdateTransactionDTO, id?: string) => {
+  const handleSave = async (
+    data: CreateTransactionDTO | UpdateTransactionDTO,
+    id?: string,
+  ) => {
     try {
       if (id) {
-        // Update
-        const updatedTransaction = await transactionRepository.update(id, data as UpdateTransactionDTO);
-        setTransactions((prev) => 
-          prev.map((t) => (t.id === id ? updatedTransaction : t))
+        const updatedTransaction = await transactionRepository.update(
+          id,
+          data as UpdateTransactionDTO,
+        );
+        setTransactions((prev) =>
+          prev.map((t) => (t.id === id ? updatedTransaction : t)),
         );
       } else {
-        // Create
-        const newTransaction = await transactionRepository.create(data as CreateTransactionDTO);
+        const newTransaction = await transactionRepository.create(
+          data as CreateTransactionDTO,
+        );
         setTransactions((prev) => [newTransaction, ...prev]);
       }
       setIsModalOpen(false);
@@ -89,7 +105,9 @@ export default function TransactionsPage() {
     if (!transactionToDelete) return;
     try {
       await transactionRepository.delete(transactionToDelete);
-      setTransactions((prev) => prev.filter((t) => t.id !== transactionToDelete));
+      setTransactions((prev) =>
+        prev.filter((t) => t.id !== transactionToDelete),
+      );
       setIsDeleteModalOpen(false);
       setTransactionToDelete(null);
     } catch (error) {
@@ -98,18 +116,21 @@ export default function TransactionsPage() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="container mx-auto max-w-4xl p-4 pb-24"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <motion.header className="mb-8 flex items-center justify-between" variants={itemVariants}>
+      <motion.header
+        className="mb-8 flex items-center justify-between"
+        variants={itemVariants}
+      >
         <div>
-          <h1 className="text-display-small font-bold text-on-surface">
+          <h1 className="text-display-small font-bold text-on-surface dark:text-dark-on-surface">
             Transacciones
           </h1>
-          <p className="text-body-large text-on-surface-variant">
+          <p className="text-body-large text-on-surface-variant dark:text-dark-on-surface-variant">
             Historial de movimientos
           </p>
         </div>
@@ -119,18 +140,20 @@ export default function TransactionsPage() {
             <Button
               variant="flat"
               startContent={<Filter className="h-4 w-4" />}
-              className="bg-surface-container-high text-on-surface-variant"
+              className="bg-surface-container-high dark:bg-dark-surface-container-high text-on-surface-variant dark:text-dark-on-surface-variant"
             >
               {filterType === "all"
                 ? "Todos"
                 : filterType === "income"
-                ? "Ingresos"
-                : "Gastos"}
+                  ? "Ingresos"
+                  : "Gastos"}
             </Button>
           </DropdownTrigger>
           <DropdownMenu
             aria-label="Filter transactions"
-            onAction={(key) => setFilterType(key as "all" | "income" | "expense")}
+            onAction={(key) =>
+              setFilterType(key as "all" | "income" | "expense")
+            }
             selectedKeys={new Set([filterType])}
             selectionMode="single"
           >
@@ -197,7 +220,10 @@ export default function TransactionsPage() {
           </>
         }
       >
-        <p>¿Estás seguro de que deseas eliminar esta transacción? Esta acción no se puede deshacer.</p>
+        <p>
+          ¿Estás seguro de que deseas eliminar esta transacción? Esta acción no
+          se puede deshacer.
+        </p>
       </Modal>
     </motion.div>
   );

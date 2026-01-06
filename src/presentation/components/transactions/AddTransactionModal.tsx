@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import Modal from "@/presentation/components/common/Modal";
 import Input from "@/presentation/components/common/Input";
 import Button from "@/presentation/components/common/Button";
-import { CreateTransactionDTO, Transaction, UpdateTransactionDTO } from "@/core/entities/Transaction";
+import {
+  CreateTransactionDTO,
+  Transaction,
+  UpdateTransactionDTO,
+} from "@/core/entities/Transaction";
 import { Category } from "@/core/entities/Category";
 import { SupabaseCategoryRepository } from "@/infraestructure/repositories/SupabaseCategoryRepository";
 import { useAuth } from "@/presentation/contexts/AuthContext";
@@ -11,7 +15,10 @@ import { Select, SelectItem } from "@heroui/react";
 interface AddTransactionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: CreateTransactionDTO | UpdateTransactionDTO, id?: string) => Promise<void>;
+  onSave: (
+    data: CreateTransactionDTO | UpdateTransactionDTO,
+    id?: string,
+  ) => Promise<void>;
   initialData?: Transaction | null;
 }
 
@@ -73,18 +80,20 @@ export default function AddTransactionModal({
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (e?: React.FormEvent | any) => {
-    if (e && typeof e.preventDefault === 'function') {
+    if (e && typeof e.preventDefault === "function") {
       e.preventDefault();
     }
     if (!user) return;
 
     setLoading(true);
     try {
-      // Find the selected category object to get its type
-      const selectedCategory = categories.find(c => c.name === formData.category);
-      
-      // Default to expense if something goes wrong, but it should be determined by category
-      const transactionType = selectedCategory ? selectedCategory.type : formData.type;
+      const selectedCategory = categories.find(
+        (c) => c.name === formData.category,
+      );
+
+      const transactionType = selectedCategory
+        ? selectedCategory.type
+        : formData.type;
 
       const transactionData = {
         userId: user.id,
@@ -101,7 +110,7 @@ export default function AddTransactionModal({
       } else {
         await onSave(transactionData);
       }
-      
+
       onClose();
       if (!initialData) {
         setFormData({
@@ -121,13 +130,12 @@ export default function AddTransactionModal({
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categoryName = e.target.value;
-    const selectedCategory = categories.find(c => c.name === categoryName);
-    
-    setFormData({ 
-      ...formData, 
+    const selectedCategory = categories.find((c) => c.name === categoryName);
+
+    setFormData({
+      ...formData,
       category: categoryName,
-      // Update type immediately based on category, useful for UI feedback if needed
-      type: selectedCategory ? selectedCategory.type : formData.type 
+      type: selectedCategory ? selectedCategory.type : formData.type,
     });
   };
 
@@ -160,8 +168,9 @@ export default function AddTransactionModal({
                 setFormData({ ...formData, amount: e.target.value })
               }
               required
-              // Add visual cue for income/expense based on current derived type
-              className={formData.type === 'income' ? "text-success" : "text-on-surface"}
+              className={
+                formData.type === "income" ? "text-success" : "text-on-surface"
+              }
             />
           </div>
           <div className="flex-1">
@@ -205,12 +214,14 @@ export default function AddTransactionModal({
                     <span>{cat.icon}</span>
                     <span>{cat.name}</span>
                   </div>
-                  <span className={`text-tiny px-2 py-0.5 rounded-full ${
-                    cat.type === 'income' 
-                      ? 'bg-success/10 text-success' 
-                      : 'bg-danger/10 text-danger'
-                  }`}>
-                    {cat.type === 'income' ? 'Ingreso' : 'Gasto'}
+                  <span
+                    className={`text-tiny px-2 py-0.5 rounded-full ${
+                      cat.type === "income"
+                        ? "bg-success/10 text-success"
+                        : "bg-danger/10 text-danger"
+                    }`}
+                  >
+                    {cat.type === "income" ? "Ingreso" : "Gasto"}
                   </span>
                 </div>
               </SelectItem>

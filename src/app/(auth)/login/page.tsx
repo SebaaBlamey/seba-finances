@@ -30,16 +30,16 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <div className="w-full max-w-md">
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-container rounded-[28px] shadow-sm mb-6">
             <Wallet className="w-10 h-10 text-on-primary-container" />
           </div>
-          <h1 className="text-[45px] leading-[52px] font-normal text-on-surface mb-2">Finanzas</h1>
+          <h1 className="text-[45px] leading-[52px] font-normal text-on-surface mb-2">
+            Finanzas
+          </h1>
           <p className="text-on-surface-variant text-lg">Bienvenido de nuevo</p>
         </div>
 
-        {/* Login Form */}
         <Card className="bg-surface-container-low shadow-md rounded-[28px]">
           <CardBody className="p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -55,7 +55,8 @@ export default function LoginPage() {
                 radius="sm"
                 labelPlacement="inside"
                 classNames={{
-                  inputWrapper: "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
+                  inputWrapper:
+                    "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
                   label: "text-on-surface-variant",
                   input: "text-on-surface",
                 }}
@@ -73,7 +74,8 @@ export default function LoginPage() {
                 radius="sm"
                 labelPlacement="inside"
                 classNames={{
-                  inputWrapper: "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
+                  inputWrapper:
+                    "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
                   label: "text-on-surface-variant",
                   input: "text-on-surface",
                 }}

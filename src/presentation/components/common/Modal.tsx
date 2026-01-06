@@ -27,7 +27,6 @@ export default function Modal({
 }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Close on Escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -36,7 +35,6 @@ export default function Modal({
     return () => window.removeEventListener("keydown", handleEscape);
   }, [isOpen, onClose]);
 
-  // Prevent body scroll when open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -48,7 +46,6 @@ export default function Modal({
     };
   }, [isOpen]);
 
-  // Size classes
   const sizeClasses = {
     sm: "max-w-sm",
     md: "max-w-md",
@@ -63,7 +60,6 @@ export default function Modal({
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop (Scrim) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -73,7 +69,6 @@ export default function Modal({
             onClick={onClose}
           />
 
-          {/* Modal Container */}
           <motion.div
             ref={modalRef}
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -81,25 +76,27 @@ export default function Modal({
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{
               duration: 0.4,
-              ease: [0.2, 0.0, 0, 1.0], // M3 Standard Easing
+              ease: [0.2, 0.0, 0, 1.0],
             }}
             className={`
-              relative w-full ${sizeClasses[size]} 
-              bg-white dark:bg-gray-900 
+              relative w-full ${sizeClasses[size]}
+              bg-white dark:bg-gray-900
               text-gray-900 dark:text-gray-100
               rounded-[28px] shadow-2xl border border-gray-200 dark:border-gray-700
               flex flex-col max-h-[90vh] overflow-hidden
               ${className}
             `}
-            style={{ 
+            style={{
               backgroundColor: "var(--surface-container-high, #ECE6F0)",
-              color: "var(--on-surface, #1C1B1F)"
+              color: "var(--on-surface, #1C1B1F)",
             }}
           >
-            {/* Header */}
             <div className="flex items-center justify-between px-6 pt-6 pb-4 shrink-0">
               {title && (
-                <h2 className="text-headline-small font-normal" style={{ color: "var(--on-surface, #1C1B1F)" }}>
+                <h2
+                  className="text-headline-small font-normal"
+                  style={{ color: "var(--on-surface, #1C1B1F)" }}
+                >
                   {title}
                 </h2>
               )}
@@ -114,12 +111,13 @@ export default function Modal({
               </Button>
             </div>
 
-            {/* Body */}
-            <div className="px-6 py-2 overflow-y-auto text-body-medium" style={{ color: "var(--on-surface-variant, #49454F)" }}>
+            <div
+              className="px-6 py-2 overflow-y-auto text-body-medium"
+              style={{ color: "var(--on-surface-variant, #49454F)" }}
+            >
               {children}
             </div>
 
-            {/* Footer */}
             <div className="px-6 pt-4 pb-6 shrink-0 flex justify-end gap-2">
               {footer}
             </div>
@@ -127,6 +125,6 @@ export default function Modal({
         </div>
       )}
     </AnimatePresence>,
-    document.body
+    document.body,
   );
 }

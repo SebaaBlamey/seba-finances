@@ -5,7 +5,6 @@ export class LoginUserUseCase {
   constructor(private authRepository: IAuthRepository) {}
   async execute(email: string, password: string): Promise<User> {
     const supabaseUser = await this.authRepository.signIn(email, password);
-    // Mapea a tu entidad User
     return {
       id: supabaseUser.id,
       name: supabaseUser.name || "",

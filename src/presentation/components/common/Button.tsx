@@ -8,8 +8,12 @@ import { ReactNode } from "react";
 
 interface ButtonProps extends Omit<HeroUIButtonProps, "variant"> {
   children: ReactNode;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onClick?: (() => void) | (() => Promise<void>) | ((e: any) => void) | ((e: any) => Promise<void>);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onClick?:
+    | (() => void)
+    | (() => Promise<void>)
+    | ((e: any) => void)
+    | ((e: any) => Promise<void>);
   variant?: "primary" | "secondary" | "tertiary" | "danger" | "ghost";
   disabled?: boolean;
   type?: "button" | "submit";
@@ -52,7 +56,7 @@ export default function Button({
       variant={heroUIVariant}
       color={color}
       className={`font-medium tracking-wide ${className}`}
-      radius="full" // M3 uses full radius for buttons
+      radius="full"
       size="lg"
       {...props}
     >

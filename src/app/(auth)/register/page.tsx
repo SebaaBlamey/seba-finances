@@ -38,18 +38,18 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <div className="w-full max-w-md space-y-8">
-        {/* Logo/Header */}
         <div className="text-center space-y-4">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-container rounded-[28px] shadow-sm">
             <Wallet className="w-10 h-10 text-on-primary-container" />
           </div>
           <div>
-            <h1 className="text-[45px] leading-[52px] font-normal text-on-surface">Finanzas</h1>
+            <h1 className="text-[45px] leading-[52px] font-normal text-on-surface">
+              Finanzas
+            </h1>
             <p className="text-on-surface-variant text-lg">Crea tu cuenta</p>
           </div>
         </div>
 
-        {/* Register Form */}
         <Card className="bg-surface-container-low shadow-md rounded-[28px]">
           <CardBody className="p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -65,9 +65,12 @@ export default function RegisterPage() {
                   variant="flat"
                   radius="sm"
                   labelPlacement="inside"
-                  startContent={<User className="w-4 h-4 text-on-surface-variant" />}
+                  startContent={
+                    <User className="w-4 h-4 text-on-surface-variant" />
+                  }
                   classNames={{
-                    inputWrapper: "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
+                    inputWrapper:
+                      "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
                     label: "text-on-surface-variant",
                     input: "text-on-surface",
                   }}
@@ -86,9 +89,12 @@ export default function RegisterPage() {
                   variant="flat"
                   radius="sm"
                   labelPlacement="inside"
-                  startContent={<Mail className="w-4 h-4 text-on-surface-variant" />}
+                  startContent={
+                    <Mail className="w-4 h-4 text-on-surface-variant" />
+                  }
                   classNames={{
-                    inputWrapper: "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
+                    inputWrapper:
+                      "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
                     label: "text-on-surface-variant",
                     input: "text-on-surface",
                   }}
@@ -107,9 +113,12 @@ export default function RegisterPage() {
                   variant="flat"
                   radius="sm"
                   labelPlacement="inside"
-                  startContent={<Lock className="w-4 h-4 text-on-surface-variant" />}
+                  startContent={
+                    <Lock className="w-4 h-4 text-on-surface-variant" />
+                  }
                   classNames={{
-                    inputWrapper: "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
+                    inputWrapper:
+                      "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
                     label: "text-on-surface-variant",
                     input: "text-on-surface",
                   }}
@@ -130,7 +139,11 @@ export default function RegisterPage() {
                   size="lg"
                   radius="full"
                 >
-                  {loading ? <LoadingSpinner size="small" color="white" /> : "Crear Cuenta"}
+                  {loading ? (
+                    <LoadingSpinner size="small" color="white" />
+                  ) : (
+                    "Crear Cuenta"
+                  )}
                 </Button>
 
                 <Button

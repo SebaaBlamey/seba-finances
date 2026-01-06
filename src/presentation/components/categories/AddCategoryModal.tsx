@@ -15,7 +15,24 @@ interface AddCategoryModalProps {
   userId: string;
 }
 
-const ICONS = ["🍔", "🚌", "💰", "🎮", "🏠", "🛒", "💊", "🎓", "✈️", "🎁", "🔧", "💼", "👶", "🐾", "📉", "📈"];
+const ICONS = [
+  "🍔",
+  "🚌",
+  "💰",
+  "🎮",
+  "🏠",
+  "🛒",
+  "💊",
+  "🎓",
+  "✈️",
+  "🎁",
+  "🔧",
+  "💼",
+  "👶",
+  "🐾",
+  "📉",
+  "📈",
+];
 
 const COLORS = [
   { name: "primary", label: "Primary" },
@@ -32,7 +49,7 @@ export default function AddCategoryModal({
   userId,
 }: AddCategoryModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const {
     register,
     handleSubmit,
@@ -98,13 +115,16 @@ export default function AddCategoryModal({
             Cancelar
           </Button>
           <Button onClick={handleSubmit(onFormSubmit)} disabled={isSubmitting}>
-            {isSubmitting ? "Guardando..." : initialData ? "Actualizar" : "Guardar"}
+            {isSubmitting
+              ? "Guardando..."
+              : initialData
+                ? "Actualizar"
+                : "Guardar"}
           </Button>
         </>
       }
     >
       <form className="flex flex-col gap-6 py-2">
-        {/* Name Input */}
         <Input
           {...register("name", { required: "El nombre es requerido" })}
           label="Nombre"
@@ -118,14 +138,15 @@ export default function AddCategoryModal({
           }}
         />
 
-        {/* Type Selection */}
         <Select
           label="Tipo"
           placeholder="Selecciona el tipo"
           variant="bordered"
           radius="sm"
           selectedKeys={[watch("type")]}
-          onChange={(e) => setValue("type", e.target.value as "income" | "expense")}
+          onChange={(e) =>
+            setValue("type", e.target.value as "income" | "expense")
+          }
           classNames={{
             trigger: "bg-surface-container-highest",
           }}
@@ -134,9 +155,10 @@ export default function AddCategoryModal({
           <SelectItem key="expense">Gasto</SelectItem>
         </Select>
 
-        {/* Icon Selection */}
         <div className="flex flex-col gap-2">
-          <label className="text-body-small text-on-surface-variant">Icono</label>
+          <label className="text-body-small text-on-surface-variant">
+            Icono
+          </label>
           <div className="grid grid-cols-8 gap-2">
             {ICONS.map((icon) => (
               <button
@@ -145,9 +167,11 @@ export default function AddCategoryModal({
                 onClick={() => setValue("icon", icon)}
                 className={`
                   h-10 w-10 rounded-full flex items-center justify-center text-xl transition-all
-                  ${selectedIcon === icon 
-                    ? "bg-primary-container text-on-primary-container ring-2 ring-primary" 
-                    : "bg-surface-container-highest hover:bg-surface-container-high text-on-surface"}
+                  ${
+                    selectedIcon === icon
+                      ? "bg-primary-container text-on-primary-container ring-2 ring-primary"
+                      : "bg-surface-container-highest hover:bg-surface-container-high text-on-surface"
+                  }
                 `}
               >
                 {icon}
@@ -156,9 +180,10 @@ export default function AddCategoryModal({
           </div>
         </div>
 
-        {/* Color Selection */}
         <div className="flex flex-col gap-2">
-          <label className="text-body-small text-on-surface-variant">Color</label>
+          <label className="text-body-small text-on-surface-variant">
+            Color
+          </label>
           <div className="flex gap-4">
             {COLORS.map((color) => (
               <button

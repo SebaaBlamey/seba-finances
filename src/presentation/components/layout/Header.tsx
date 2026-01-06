@@ -1,20 +1,44 @@
 "use client";
 
-import { useAuth } from "@/presentation/contexts/AuthContext";
-import Dropdown from "@/presentation/components/common/Dropdown";
-import { User, Menu, Moon, Sun } from "lucide-react";
-import { Button } from "@heroui/react";
+import { Bell, Sun, Moon } from "lucide-react";
+import {
+  Button,
+  Badge,
+  Avatar,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@heroui/react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/presentation/contexts/AuthContext";
 
 interface HeaderProps {
-  onSignOutClick: () => void;
-  mLoading: boolean;
+  pageTitle?: string;
+  subtitle?: string;
+  notificationCount?: number;
+  onNotificationClick?: () => void;
+  onThemeToggle?: () => void;
+  currentTheme?: "light" | "dark";
+  user?: {
+    name: string;
+    avatar?: string;
+  };
+  className?: string;
 }
 
-export default function Header({ onSignOutClick, mLoading }: HeaderProps) {
-  const { user } = useAuth();
+export default function Header({
+  pageTitle = "Finanzas de Seba",
+  subtitle = "Aquí tienes tu resumen financiero de hoy",
+  notificationCount = 3,
+  onNotificationClick,
+  onThemeToggle,
+  currentTheme,
+  className = "",
+}: HeaderProps) {
   const { theme, setTheme } = useTheme();
+  const { user: authUser, signOut } = useAuth();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -22,61 +46,90 @@ export default function Header({ onSignOutClick, mLoading }: HeaderProps) {
     return () => clearTimeout(timer);
   }, []);
 
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+  const effectiveTheme = currentTheme || theme;
+  const userInfo = authUser
+    ? { name: authUser.name || authUser.email || "Usuario", avatar: undefined }
+    : { name: "Seba", avatar: undefined };
+
+  const handleThemeToggle = () => {
+    if (onThemeToggle) {
+      onThemeToggle();
+    } else {
+      setTheme(theme === "light" ? "dark" : "light");
+    }
   };
 
-  const dropdownOptions = [
-    {
-      key: "profile",
-      label: "Mi perfil",
-      onClick: () => {
-        // TODO: Navigate to profile page
-        console.log("Navigate to profile");
-      },
-    },
-    {
-      key: "logout",
-      label: "Cerrar sesión",
-      onClick: onSignOutClick,
-      color: "danger" as const,
-    },
-  ];
+  const handleNotificationClick = () => {
+    if (onNotificationClick) {
+      onNotificationClick();
+    } else {
+      console.log("Notifications clicked");
+    }
+  };
 
   return (
-    <header className="bg-surface/80 backdrop-blur-md sticky top-0 z-30 border-b border-surface-variant/20">
-      <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center gap-4">
-            {/* Mobile menu trigger is now handled in Sidebar component but we keep the title */}
-            <h1 className="text-xl font-medium text-on-surface">
-              Finanzas de <strong className="text-primary">{user?.name}</strong>
-            </h1>
-          </div>
+    <header
+      className={`sticky top-0 z-10 bg-surface dark:bg-dark-surface border-b border-outline-variant dark:border-dark-outline-variant shadow-sm ${className}`}
+    >
+      <div className="px-6 py-4 flex items-center justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-headline-small text-on-surface dark:text-dark-on-surface">
+            {pageTitle}
+          </h1>
+          <p className="text-body-medium text-on-surface-variant dark:text-dark-on-surface-variant">
+            {subtitle}
+          </p>
+        </div>
 
-          <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          {mounted && (
             <Button
-              variant="ghost"
-              className="hidden sm:flex text-on-surface-variant hover:text-primary"
-              onPress={toggleTheme}
               isIconOnly
+              variant="light"
+              radius="full"
+              aria-label={`Switch to ${effectiveTheme === "light" ? "dark" : "light"} mode`}
+              onPress={handleThemeToggle}
+              className="text-on-surface-variant dark:text-dark-on-surface-variant hover:text-on-surface dark:hover:text-dark-on-surface"
             >
-              {mounted && theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+              {effectiveTheme === "light" ? (
+                <Moon size={20} />
+              ) : (
+                <Sun size={20} />
+              )}
             </Button>
-            <Dropdown
-              trigger={
-                <Button
-                  variant="flat"
-                  className="bg-secondary-container text-on-secondary-container font-medium"
-                  startContent={<User size={20} />}
-                  radius="full"
-                >
-                  {user?.name || user?.email}
-                </Button>
-              }
-              options={dropdownOptions}
-            />
-          </div>
+          )}
+
+          <Dropdown placement="bottom-end">
+            <DropdownTrigger>
+              <Button variant="light" className="gap-2" aria-label="User menu">
+                <Avatar
+                  name={userInfo.name}
+                  src={userInfo.avatar}
+                  size="sm"
+                  className="bg-primary-container text-on-primary-container"
+                />
+                <span className="text-label-large text-on-surface dark:text-dark-on-surface hidden sm:inline">
+                  {userInfo.name}
+                </span>
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="User actions">
+              <DropdownItem key="profile" className="text-label-large">
+                Perfil
+              </DropdownItem>
+              <DropdownItem key="settings" className="text-label-large">
+                Configuración
+              </DropdownItem>
+              <DropdownItem
+                key="logout"
+                className="text-label-large text-error"
+                color="danger"
+                onPress={signOut}
+              >
+                Cerrar Sesión
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </div>
       </div>
     </header>

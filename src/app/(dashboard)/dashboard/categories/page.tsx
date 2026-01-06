@@ -3,12 +3,19 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/presentation/contexts/AuthContext";
 import { SupabaseCategoryRepository } from "@/infraestructure/repositories/SupabaseCategoryRepository";
-import { Category, CreateCategoryDTO, UpdateCategoryDTO } from "@/core/entities/Category";
+import {
+  Category,
+  CreateCategoryDTO,
+  UpdateCategoryDTO,
+} from "@/core/entities/Category";
 import { Card, CardBody, Chip } from "@heroui/react";
 import { Plus, Trash2, Edit2 } from "lucide-react";
 import { FAB } from "@/presentation/components/common/FAB";
 import { motion } from "framer-motion";
-import { containerVariants, itemVariants } from "@/presentation/utils/animations";
+import {
+  containerVariants,
+  itemVariants,
+} from "@/presentation/utils/animations";
 import { CategoriesGridSkeleton } from "@/presentation/components/common/LoadingComponents";
 import AddCategoryModal from "@/presentation/components/categories/AddCategoryModal";
 import Modal from "@/presentation/components/common/Modal";
@@ -20,11 +27,14 @@ export default function CategoriesPage() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-  const [deleteConfirmation, setDeleteConfirmation] = useState<{ isOpen: boolean; categoryId: string | null }>({
+  const [deleteConfirmation, setDeleteConfirmation] = useState<{
+    isOpen: boolean;
+    categoryId: string | null;
+  }>({
     isOpen: false,
     categoryId: null,
   });
-  
+
   const categoryRepository = new SupabaseCategoryRepository();
 
   useEffect(() => {
@@ -43,7 +53,6 @@ export default function CategoriesPage() {
       setCategories(data);
     } catch (e) {
       console.error("Error loading categories:", e);
-      // Fallback to empty array if table doesn't exist yet
       setCategories([]);
     } finally {
       setLoading(false);
@@ -53,7 +62,10 @@ export default function CategoriesPage() {
   const handleCreateCategory = async (data: CreateCategoryDTO) => {
     try {
       if (editingCategory) {
-        await categoryRepository.update(editingCategory.id, data as UpdateCategoryDTO);
+        await categoryRepository.update(
+          editingCategory.id,
+          data as UpdateCategoryDTO,
+        );
       } else {
         await categoryRepository.create(data);
       }
@@ -86,15 +98,17 @@ export default function CategoriesPage() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="container mx-auto max-w-5xl p-4 pb-24"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
       <motion.header className="mb-8" variants={itemVariants}>
-        <h1 className="text-display-small font-bold text-on-surface">Categorías</h1>
-        <p className="text-body-large text-on-surface-variant">
+        <h1 className="text-display-small font-bold text-on-surface dark:text-dark-on-surface">
+          Categorías
+        </h1>
+        <p className="text-body-large text-on-surface-variant dark:text-dark-on-surface-variant">
           Organiza tus ingresos y gastos
         </p>
       </motion.header>
@@ -105,12 +119,16 @@ export default function CategoriesPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {categories.length === 0 ? (
-              <motion.div 
-                variants={itemVariants} 
-                className="col-span-full text-center py-12 text-on-surface-variant"
+              <motion.div
+                variants={itemVariants}
+                className="col-span-full text-center py-12 text-on-surface-variant dark:text-dark-on-surface-variant"
               >
-                <p className="text-body-large">No tienes categorías creadas aún.</p>
-                <p className="text-body-medium mt-2">Usa el botón + para crear una.</p>
+                <p className="text-body-large">
+                  No tienes categorías creadas aún.
+                </p>
+                <p className="text-body-medium mt-2">
+                  Usa el botón + para crear una.
+                </p>
               </motion.div>
             ) : (
               categories.map((category, index) => (
@@ -122,34 +140,44 @@ export default function CategoriesPage() {
                   animate="visible"
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="bg-surface-container-low hover:bg-surface-container-high transition-colors cursor-pointer group">
+                  <Card className="bg-surface-container-low dark:bg-dark-surface-container-low hover:bg-surface-container-high dark:hover:bg-dark-surface-container-high transition-colors cursor-pointer group border border-outline-variant dark:border-dark-outline-variant">
                     <CardBody className="flex flex-row items-center justify-between p-4">
                       <div className="flex items-center gap-4">
-                        <div className={`h-12 w-12 rounded-[16px] flex items-center justify-center text-2xl bg-${category.color}-container text-on-${category.color}-container`}>
+                        <div
+                          className={`h-12 w-12 rounded-[16px] flex items-center justify-center text-2xl bg-${category.color}-container dark:bg-dark-${category.color}-container/20 text-on-${category.color}-container dark:text-dark-${category.color}`}
+                        >
                           {category.icon}
                         </div>
                         <div>
-                          <h3 className="text-title-medium font-medium text-on-surface">{category.name}</h3>
-                          <Chip size="sm" variant="flat" color={category.type === "income" ? "success" : "danger"}>
+                          <h3 className="text-title-medium font-medium text-on-surface dark:text-dark-on-surface">
+                            {category.name}
+                          </h3>
+                          <Chip
+                            size="sm"
+                            variant="flat"
+                            color={
+                              category.type === "income" ? "success" : "danger"
+                            }
+                          >
                             {category.type === "income" ? "Ingreso" : "Gasto"}
                           </Chip>
                         </div>
                       </div>
-                      
+
                       <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button 
-                          isIconOnly 
-                          variant="ghost" 
+                        <Button
+                          isIconOnly
+                          variant="ghost"
                           onClick={() => openEditModal(category)}
-                          className="text-on-surface-variant hover:bg-surface-variant/20"
+                          className="text-on-surface-variant dark:text-dark-on-surface-variant hover:bg-surface-variant/20 dark:hover:bg-white/10"
                         >
                           <Edit2 size={18} />
                         </Button>
-                        <Button 
-                          isIconOnly 
-                          variant="ghost" 
+                        <Button
+                          isIconOnly
+                          variant="ghost"
                           onClick={() => openDeleteModal(category.id)}
-                          className="text-error hover:bg-error/10"
+                          className="text-error dark:text-dark-error hover:bg-error/10 dark:hover:bg-dark-error/10"
                         >
                           <Trash2 size={18} />
                         </Button>
@@ -196,18 +224,22 @@ export default function CategoriesPage() {
 
       <Modal
         isOpen={deleteConfirmation.isOpen}
-        onClose={() => setDeleteConfirmation({ isOpen: false, categoryId: null })}
+        onClose={() =>
+          setDeleteConfirmation({ isOpen: false, categoryId: null })
+        }
         title="Eliminar Categoría"
         footer={
           <>
-            <Button 
-              variant="ghost" 
-              onClick={() => setDeleteConfirmation({ isOpen: false, categoryId: null })}
+            <Button
+              variant="ghost"
+              onClick={() =>
+                setDeleteConfirmation({ isOpen: false, categoryId: null })
+              }
             >
               Cancelar
             </Button>
-            <Button 
-              className="bg-error text-on-error hover:bg-error/90"
+            <Button
+              className="bg-error dark:bg-dark-error text-on-error dark:text-dark-on-error hover:bg-error/90 dark:hover:bg-dark-error/90"
               onClick={handleDeleteCategory}
             >
               Eliminar
@@ -215,7 +247,10 @@ export default function CategoriesPage() {
           </>
         }
       >
-        <p>¿Estás seguro de que deseas eliminar esta categoría? Esta acción no se puede deshacer.</p>
+        <p className="text-on-surface dark:text-dark-on-surface">
+          ¿Estás seguro de que deseas eliminar esta categoría? Esta acción no se
+          puede deshacer.
+        </p>
       </Modal>
     </motion.div>
   );

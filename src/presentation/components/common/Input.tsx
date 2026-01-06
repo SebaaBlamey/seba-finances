@@ -1,10 +1,13 @@
 "use client";
 
-import { Input as HeroUIInput, InputProps as HeroUIInputProps } from "@heroui/react";
+import {
+  Input as HeroUIInput,
+  InputProps as HeroUIInputProps,
+} from "@heroui/react";
 import { forwardRef } from "react";
 
-interface InputProps extends Omit<HeroUIInputProps, 'onChange'> {
-  type?: 'text' | 'email' | 'password' | 'number' | 'date';
+interface InputProps extends Omit<HeroUIInputProps, "onChange"> {
+  type?: "text" | "email" | "password" | "number" | "date";
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -16,18 +19,21 @@ interface InputProps extends Omit<HeroUIInputProps, 'onChange'> {
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ 
-    type = 'text', 
-    placeholder, 
-    value, 
-    onChange, 
-    disabled, 
-    required, 
-    className = '', 
-    label, 
-    error,
-    ...props
-  }, ref) => {
+  (
+    {
+      type = "text",
+      placeholder,
+      value,
+      onChange,
+      disabled,
+      required,
+      className = "",
+      label,
+      error,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <HeroUIInput
         ref={ref}
@@ -41,12 +47,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         label={label}
         errorMessage={error}
         isInvalid={!!error}
-        variant="flat" // M3 uses filled/flat style for inputs usually, or outlined
-        radius="sm" // M3 text fields have small top radius if filled, or small radius if outlined
+        variant="flat"
+        radius="sm"
         size="lg"
         labelPlacement="inside"
         classNames={{
-          inputWrapper: "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
+          inputWrapper:
+            "bg-surface-variant/30 data-[hover=true]:bg-surface-variant/50 group-data-[focus=true]:bg-surface-variant/50",
           label: "text-on-surface-variant",
           input: "text-on-surface",
         }}
@@ -54,9 +61,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {...props}
       />
     );
-  }
+  },
 );
 
-Input.displayName = 'Input';
+Input.displayName = "Input";
 
 export default Input;

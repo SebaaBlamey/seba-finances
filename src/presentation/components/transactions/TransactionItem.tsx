@@ -28,16 +28,16 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   return (
     <Card
       variant="elevated"
-      className="mb-3 hover:bg-surface-container-high transition-colors cursor-pointer group"
+      className="mb-3 bg-surface-container-low dark:bg-dark-surface-container-low hover:bg-surface-container-high dark:hover:bg-dark-surface-container-high transition-colors cursor-pointer group border border-outline-variant dark:border-dark-outline-variant"
     >
       <CardContent className="flex items-center justify-between p-4">
         <div className="flex items-center gap-4">
           <div
             className={cn(
-              "flex h-10 w-10 items-center justify-center rounded-full",
+              "flex h-10 w-10 items-center justify-center rounded-[12px]",
               isIncome
-                ? "bg-success-container text-on-success-container"
-                : "bg-error-container text-on-error-container"
+                ? "bg-success-container/20 dark:bg-dark-success-container/20 text-success dark:text-dark-success"
+                : "bg-error-container/20 dark:bg-dark-error-container/20 text-error dark:text-dark-error"
             )}
           >
             {isIncome ? (
@@ -47,10 +47,10 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
             )}
           </div>
           <div className="flex flex-col">
-            <span className="text-body-large font-medium text-on-surface">
+            <span className="text-body-large font-medium text-on-surface dark:text-dark-on-surface">
               {transaction.description}
             </span>
-            <span className="text-body-small text-on-surface-variant">
+            <span className="text-body-small text-on-surface-variant dark:text-dark-on-surface-variant">
               {transaction.category} • {formatDate(transaction.date)}
             </span>
           </div>
@@ -60,7 +60,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           <span
             className={cn(
               "text-body-large font-semibold",
-              isIncome ? "text-success" : "text-error"
+              isIncome ? "text-success dark:text-dark-success" : "text-error dark:text-dark-error"
             )}
           >
             {isIncome ? "+" : "-"} {formatCurrency(transaction.amount)}
@@ -71,7 +71,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
               <Button
                 isIconOnly
                 variant="light"
-                className="text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity"
+                className="text-on-surface-variant dark:text-dark-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity"
               >
                 <MoreVertical className="h-5 w-5" />
               </Button>
@@ -82,7 +82,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
               </DropdownItem>
               <DropdownItem
                 key="delete"
-                className="text-error"
+                className="text-error dark:text-dark-error"
                 color="danger"
                 onPress={() => onDelete?.(transaction.id)}
               >

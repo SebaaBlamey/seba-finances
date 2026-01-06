@@ -23,38 +23,38 @@ export const TransactionList: React.FC<TransactionListProps> = ({
 
   if (transactions.length === 0) {
     return (
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="flex flex-col items-center justify-center py-12 text-center"
       >
-        <motion.div 
+        <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ 
-            delay: 0.2, 
+          transition={{
+            delay: 0.2,
             duration: 0.4,
             type: "spring",
-            stiffness: 200 
+            stiffness: 200,
           }}
-          className="mb-4 rounded-full bg-surface-container-highest p-4"
+          className="mb-4 rounded-full bg-surface-container-highest dark:bg-dark-surface-container-highest p-4"
         >
           <span className="text-4xl">💸</span>
         </motion.div>
-        <motion.h3 
+        <motion.h3
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="text-title-medium font-medium text-on-surface"
+          className="text-title-medium font-medium text-on-surface dark:text-dark-on-surface"
         >
           No hay transacciones
         </motion.h3>
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-body-medium text-on-surface-variant"
+          className="text-body-medium text-on-surface-variant dark:text-dark-on-surface-variant"
         >
           Comienza agregando tu primer ingreso o gasto
         </motion.p>
@@ -72,7 +72,7 @@ export const TransactionList: React.FC<TransactionListProps> = ({
           transition={{
             duration: 0.3,
             delay: index * 0.05,
-            ease: [0.2, 0.0, 0, 1.0], // Standard easing
+            ease: [0.2, 0.0, 0, 1.0],
           }}
         >
           <TransactionItem

@@ -6,12 +6,22 @@ import { Card, CardBody, Button, Switch, Avatar } from "@heroui/react";
 import { User, Bell, Shield, Moon, LogOut, ChevronRight } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
-import { containerVariants, itemVariants } from "@/presentation/utils/animations";
+import {
+  containerVariants,
+  itemVariants,
+} from "@/presentation/utils/animations";
 
-// Helper component for Chip since it wasn't imported
-function Chip({ children, className }: { children: React.ReactNode; className?: string }) {
+function Chip({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${className}`}>
+    <span
+      className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${className}`}
+    >
       {children}
     </span>
   );
@@ -29,13 +39,23 @@ export default function SettingsPage() {
           icon: <User size={20} />,
           label: "Información Personal",
           description: "Actualiza tu nombre y correo",
-          action: <ChevronRight size={20} className="text-on-surface-variant" />,
+          action: (
+            <ChevronRight
+              size={20}
+              className="text-on-surface-variant dark:text-dark-on-surface-variant"
+            />
+          ),
         },
         {
           icon: <Shield size={20} />,
           label: "Seguridad",
           description: "Cambiar contraseña y 2FA",
-          action: <ChevronRight size={20} className="text-on-surface-variant" />,
+          action: (
+            <ChevronRight
+              size={20}
+              className="text-on-surface-variant dark:text-dark-on-surface-variant"
+            />
+          ),
         },
       ],
     },
@@ -47,53 +67,55 @@ export default function SettingsPage() {
           label: "Modo Oscuro",
           description: "Cambiar apariencia de la app",
           action: (
-            <Switch 
-              isSelected={theme === "dark"} 
+            <Switch
+              isSelected={theme === "dark"}
               onValueChange={(v) => setTheme(v ? "dark" : "light")}
             />
           ),
-        },
-        {
-          icon: <Bell size={20} />,
-          label: "Notificaciones",
-          description: "Gestionar alertas y correos",
-          action: <Switch defaultSelected />,
         },
       ],
     },
   ];
 
   return (
-    <motion.div 
+    <motion.div
       className="container mx-auto max-w-3xl p-4"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <motion.header className="mb-8 text-center sm:text-left" variants={itemVariants}>
-        <h1 className="text-display-small font-bold text-on-surface">Configuración</h1>
-        <p className="text-body-large text-on-surface-variant">
+      <motion.header
+        className="mb-8 text-center sm:text-left"
+        variants={itemVariants}
+      >
+        <h1 className="text-display-small font-bold text-on-surface dark:text-dark-on-surface">
+          Configuración
+        </h1>
+        <p className="text-body-large text-on-surface-variant dark:text-dark-on-surface-variant">
           Gestiona tu cuenta y preferencias
         </p>
       </motion.header>
 
       <div className="space-y-6">
-        {/* Profile Card */}
         <motion.div variants={itemVariants}>
-          <Card className="bg-primary-container text-on-primary-container mb-8">
+          <Card className="bg-primary-container dark:bg-dark-primary-container text-on-primary-container dark:text-dark-on-primary-container mb-8 border-2 border-transparent dark:border-dark-primary-border">
             <CardBody className="flex flex-col sm:flex-row items-center gap-6 p-6">
-              <Avatar 
-                src={`https://ui-avatars.com/api/?name=${user?.name}&background=random`} 
+              <Avatar
+                src={`https://ui-avatars.com/api/?name=${user?.name}&background=random`}
                 className="w-24 h-24 text-2xl"
               />
               <div className="text-center sm:text-left flex-1">
-                <h2 className="text-headline-small font-bold">{user?.name}</h2>
-                <p className="text-body-large opacity-80">{user?.email}</p>
-                <Chip className="mt-2 bg-on-primary-container/10 border-none text-on-primary-container">
+                <h2 className="text-headline-small font-bold text-on-primary-container dark:text-dark-on-primary-container">
+                  {user?.name}
+                </h2>
+                <p className="text-body-large opacity-80 text-on-primary-container dark:text-dark-on-primary-container">
+                  {user?.email}
+                </p>
+                <Chip className="mt-2 bg-on-primary-container/10 dark:bg-dark-on-primary-container/10 border-none text-on-primary-container dark:text-dark-on-primary-container">
                   Plan Gratuito
                 </Chip>
               </div>
-              <Button className="bg-on-primary-container text-primary-container font-medium">
+              <Button className="bg-on-primary-container dark:bg-dark-primary text-primary-container dark:text-dark-on-primary font-medium">
                 Editar Perfil
               </Button>
             </CardBody>
@@ -101,26 +123,30 @@ export default function SettingsPage() {
         </motion.div>
 
         {sections.map((section) => (
-          <motion.div key={section.title} className="space-y-3" variants={itemVariants}>
-            <h3 className="text-title-medium font-medium text-primary ml-2">
+          <motion.div
+            key={section.title}
+            className="space-y-3"
+            variants={itemVariants}
+          >
+            <h3 className="text-title-medium font-medium text-primary dark:text-dark-primary ml-2">
               {section.title}
             </h3>
-            <Card className="bg-surface-container-low">
-              <CardBody className="p-0 divide-y divide-surface-variant/20">
+            <Card className="bg-surface-container-low dark:bg-dark-surface-container-low border border-outline-variant dark:border-dark-outline-variant">
+              <CardBody className="p-0 divide-y divide-surface-variant/20 dark:divide-dark-outline-variant">
                 {section.items.map((item, idx) => (
-                  <div 
-                    key={idx} 
-                    className="flex items-center justify-between p-4 hover:bg-surface-variant/10 transition-colors cursor-pointer"
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-4 hover:bg-surface-variant/10 dark:hover:bg-white/5 transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="p-2 rounded-full bg-secondary-container text-on-secondary-container">
+                      <div className="p-2 rounded-full bg-secondary-container dark:bg-dark-surface-container-high text-on-secondary-container dark:text-dark-on-surface">
                         {item.icon}
                       </div>
                       <div>
-                        <p className="text-body-large font-medium text-on-surface">
+                        <p className="text-body-large font-medium text-on-surface dark:text-dark-on-surface">
                           {item.label}
                         </p>
-                        <p className="text-body-small text-on-surface-variant">
+                        <p className="text-body-small text-on-surface-variant dark:text-dark-on-surface-variant">
                           {item.description}
                         </p>
                       </div>
@@ -134,10 +160,10 @@ export default function SettingsPage() {
         ))}
 
         <motion.div className="pt-8" variants={itemVariants}>
-          <Button 
-            color="danger" 
-            variant="flat" 
-            className="w-full" 
+          <Button
+            color="danger"
+            variant="flat"
+            className="w-full"
             startContent={<LogOut size={20} />}
             onPress={() => signOut()}
           >

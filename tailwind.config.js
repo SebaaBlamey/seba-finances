@@ -12,48 +12,109 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Roboto', 'sans-serif'],
+        sans: ["Roboto", "sans-serif"],
+      },
+      fontSize: {
+        "display-large": ["57px", { lineHeight: "64px", fontWeight: "400" }],
+        "display-medium": ["45px", { lineHeight: "52px", fontWeight: "400" }],
+        "display-small": ["36px", { lineHeight: "44px", fontWeight: "400" }],
+        "headline-large": ["32px", { lineHeight: "40px", fontWeight: "400" }],
+        "headline-medium": ["28px", { lineHeight: "36px", fontWeight: "400" }],
+        "headline-small": ["24px", { lineHeight: "32px", fontWeight: "400" }],
+        "title-large": ["22px", { lineHeight: "28px", fontWeight: "400" }],
+        "title-medium": ["16px", { lineHeight: "24px", fontWeight: "500" }],
+        "title-small": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+        "body-large": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+        "body-medium": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+        "body-small": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+        "label-large": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+        "label-medium": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+        "label-small": ["11px", { lineHeight: "16px", fontWeight: "500" }],
+      },
+      borderRadius: {
+        xs: "4px",
+        sm: "8px",
+        md: "12px",
+        lg: "16px",
+        xl: "28px",
+        full: "9999px",
       },
       colors: {
-        // Material Design 3 Colors using CSS variables
-        'primary': 'var(--primary)',
-        'on-primary': 'var(--on-primary)',
-        'primary-container': 'var(--primary-container)',
-        'on-primary-container': 'var(--on-primary-container)',
-        
-        'secondary': 'var(--secondary)',
-        'on-secondary': 'var(--on-secondary)',
-        'secondary-container': 'var(--secondary-container)',
-        'on-secondary-container': 'var(--on-secondary-container)',
-        
-        'tertiary': 'var(--tertiary)',
-        'on-tertiary': 'var(--on-tertiary)',
-        'tertiary-container': 'var(--tertiary-container)',
-        'on-tertiary-container': 'var(--on-tertiary-container)',
-        
-        'error': 'var(--error)',
-        'on-error': 'var(--on-error)',
-        'error-container': 'var(--error-container)',
-        'on-error-container': 'var(--on-error-container)',
-        
-        'background': 'var(--background)',
-        'on-background': 'var(--foreground)',
-        
-        'surface': 'var(--surface)',
-        'on-surface': 'var(--on-surface)',
-        'surface-variant': 'var(--surface-variant)',
-        'on-surface-variant': 'var(--on-surface-variant)',
-        'surface-container-low': 'var(--surface-container-low)',
-        'surface-container': 'var(--surface-container)',
-        'surface-container-high': 'var(--surface-container-high)',
-        'surface-container-highest': 'var(--surface-container-highest)',
-        
-        'outline': 'var(--outline)',
-        'outline-variant': 'var(--outline-variant)',
-        
-        'shadow': 'var(--shadow)',
-        'scrim': 'var(--scrim)',
-      }
+        primary: "#00897B",
+        "on-primary": "#FFFFFF",
+        "primary-container": "#B2DFDB",
+        "on-primary-container": "#004D40",
+
+        surface: "#FAFAFA",
+        "on-surface": "#1C1B1F",
+        "on-surface-variant": "#757575",
+        "surface-container-low": "#F5F5F5",
+        "surface-container": "#EEEEEE",
+        "surface-container-high": "#FFFFFF",
+        "surface-container-highest": "#E0E0E0",
+
+        success: "#4CAF50",
+        "success-container": "#C8E6C9",
+        "on-success-container": "#1B5E20",
+
+        error: "#F44336",
+        "error-container": "#FFCDD2",
+        "on-error-container": "#B71C1C",
+
+        outline: "#E0E0E0",
+        "outline-variant": "#BDBDBD",
+
+        secondary: "#625B71",
+        "on-secondary": "#FFFFFF",
+        "secondary-container": "#E8DEF8",
+        "on-secondary-container": "#1D192B",
+
+        tertiary: "#7D5260",
+        "on-tertiary": "#FFFFFF",
+        "tertiary-container": "#FFD8E4",
+        "on-tertiary-container": "#31111D",
+
+        dark: {
+          surface: "#1C1B1F",
+          "surface-dim": "#141316",
+          "surface-bright": "#3B383E",
+          "surface-container-lowest": "#0F0E11",
+          "surface-container-low": "#1D1B1E",
+          "surface-container": "#211F26",
+          "surface-container-high": "#2B2930",
+          "surface-container-highest": "#36343B",
+
+          "on-surface": "#E6E1E5",
+          "on-surface-variant": "#C7C6D0",
+          "on-surface-dim": "#938F99",
+
+          outline: "#8E9099",
+          "outline-variant": "#44474E",
+
+          primary: "#4FD8D8",
+          "on-primary": "#003738",
+          "primary-container": "#004F50",
+          "on-primary-container": "#6FF7F7",
+          "primary-border": "#00A6A6",
+
+          success: "#6FDD8B",
+          "on-success": "#00390F",
+          "success-container": "#005319",
+          "on-success-container": "#B7F3C6",
+          "success-border": "#4CAF50",
+
+          error: "#FFB4AB",
+          "on-error": "#690005",
+          "error-container": "#93000A",
+          "on-error-container": "#FFDAD6",
+          "error-border": "#EF5350",
+
+          warning: "#FFB951",
+          "on-warning": "#492900",
+          "warning-container": "#6A4000",
+          "on-warning-container": "#FFDDB5",
+        },
+      },
     },
   },
   darkMode: "class",
@@ -62,37 +123,37 @@ module.exports = {
       themes: {
         light: {
           colors: {
-            background: "#FFFBFE", // M3 Background
-            foreground: "#1C1B1F", // M3 On Background
+            background: "#FFFBFE",
+            foreground: "#1C1B1F",
             primary: {
               50: "#F2E7FE",
               100: "#D9C2FD",
               200: "#BF9EFC",
               300: "#A579FB",
               400: "#8B55FA",
-              500: "#6750A4", // M3 Primary
+              500: "#6750A4",
               600: "#5F4698",
               700: "#563C8C",
               800: "#4E3280",
               900: "#452874",
               DEFAULT: "#6750A4",
-              foreground: "#FFFFFF", // M3 On Primary
+              foreground: "#FFFFFF",
             },
             secondary: {
-              DEFAULT: "#625B71", // M3 Secondary
-              foreground: "#FFFFFF", // M3 On Secondary
+              DEFAULT: "#625B71",
+              foreground: "#FFFFFF",
             },
             success: {
-              DEFAULT: "#2E7D32", // Custom Success
+              DEFAULT: "#2E7D32",
               foreground: "#FFFFFF",
             },
             warning: {
-              DEFAULT: "#EF6C00", // Custom Warning
+              DEFAULT: "#EF6C00",
               foreground: "#FFFFFF",
             },
             danger: {
-              DEFAULT: "#B3261E", // M3 Error
-              foreground: "#FFFFFF", // M3 On Error
+              DEFAULT: "#B3261E",
+              foreground: "#FFFFFF",
             },
             default: {
               50: "#FDFBFF",
@@ -105,21 +166,20 @@ module.exports = {
               700: "#D4D1D6",
               800: "#CECBD0",
               900: "#C8C5CA",
-              DEFAULT: "#FFFBFE", // Surface
-              foreground: "#1C1B1F", // On Surface
+              DEFAULT: "#FFFBFE",
+              foreground: "#1C1B1F",
             },
-            // Custom M3 Colors
             "primary-container": "#EADDFF",
             "on-primary-container": "#21005D",
             "secondary-container": "#E8DEF8",
             "on-secondary-container": "#1D192B",
-            "tertiary": "#7D5260",
+            tertiary: "#7D5260",
             "on-tertiary": "#FFFFFF",
             "tertiary-container": "#FFD8E4",
             "on-tertiary-container": "#31111D",
             "surface-variant": "#E7E0EC",
             "on-surface-variant": "#49454F",
-            "outline": "#79747E",
+            outline: "#79747E",
           },
           layout: {
             disabledOpacity: "0.38",
@@ -127,7 +187,7 @@ module.exports = {
               small: "8px",
               medium: "12px",
               large: "16px",
-              xl: "28px", // M3 Extra Large
+              xl: "28px",
             },
             borderWidth: {
               small: "1px",
@@ -138,8 +198,8 @@ module.exports = {
         },
         dark: {
           colors: {
-            background: "#1C1B1F", // M3 Dark Background
-            foreground: "#E6E1E5", // M3 Dark On Background
+            background: "#1C1B1F",
+            foreground: "#E6E1E5",
             primary: {
               50: "#21005D",
               100: "#381E72",
@@ -148,27 +208,27 @@ module.exports = {
               400: "#7F67BE",
               500: "#9A82DB",
               600: "#B69DF8",
-              700: "#D0BCFF", // M3 Dark Primary
+              700: "#D0BCFF",
               800: "#EADDFF",
               900: "#F6EDFF",
               DEFAULT: "#D0BCFF",
-              foreground: "#381E72", // M3 Dark On Primary
+              foreground: "#381E72",
             },
             secondary: {
-              DEFAULT: "#CCC2DC", // M3 Dark Secondary
-              foreground: "#332D41", // M3 Dark On Secondary
+              DEFAULT: "#CCC2DC",
+              foreground: "#332D41",
             },
             success: {
-              DEFAULT: "#B7F397", // Custom Dark Success
+              DEFAULT: "#B7F397",
               foreground: "#003909",
             },
             warning: {
-              DEFAULT: "#FFB74D", // Custom Dark Warning
+              DEFAULT: "#FFB74D",
               foreground: "#4E2600",
             },
             danger: {
-              DEFAULT: "#F2B8B5", // M3 Dark Error
-              foreground: "#601410", // M3 Dark On Error
+              DEFAULT: "#F2B8B5",
+              foreground: "#601410",
             },
             default: {
               50: "#1C1B1F",
@@ -181,21 +241,20 @@ module.exports = {
               700: "#6D6771",
               800: "#79737E",
               900: "#867F8A",
-              DEFAULT: "#1C1B1F", // Surface
-              foreground: "#E6E1E5", // On Surface
+              DEFAULT: "#1C1B1F",
+              foreground: "#E6E1E5",
             },
-            // Custom M3 Dark Colors
             "primary-container": "#4F378B",
             "on-primary-container": "#EADDFF",
             "secondary-container": "#4A4458",
             "on-secondary-container": "#E8DEF8",
-            "tertiary": "#EFB8C8",
+            tertiary: "#EFB8C8",
             "on-tertiary": "#492532",
             "tertiary-container": "#633B48",
             "on-tertiary-container": "#FFD8E4",
             "surface-variant": "#49454F",
             "on-surface-variant": "#CAC4D0",
-            "outline": "#938F99",
+            outline: "#938F99",
           },
         },
       },

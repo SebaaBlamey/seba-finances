@@ -18,8 +18,9 @@ export default function Skeleton({
   height,
   animation = "pulse",
 }: SkeletonProps) {
-  const baseClasses = "bg-surface-variant/30 dark:bg-surface-variant/20";
-  
+  const baseClasses =
+    "bg-surface-variant/30 dark:bg-dark-surface-container-high";
+
   const variantClasses = {
     text: "rounded-md",
     circular: "rounded-full",
@@ -40,27 +41,29 @@ export default function Skeleton({
     backgroundPosition: ["-200% 0", "200% 0"],
   };
 
-  const animationProps = animation === "pulse" 
-    ? {
-        animate: pulseAnimation,
-        transition: {
-          duration: 1.5,
-          repeat: Infinity,
-          ease: "easeInOut" as const
+  const animationProps =
+    animation === "pulse"
+      ? {
+          animate: pulseAnimation,
+          transition: {
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut" as const,
+          },
         }
-      }
-    : {
-        animate: waveAnimation,
-        transition: {
-          duration: 2,
-          repeat: Infinity,
-          ease: "linear" as const
-        },
-        style: {
-          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)",
-          backgroundSize: "200% 100%",
-        }
-      };
+      : {
+          animate: waveAnimation,
+          transition: {
+            duration: 2,
+            repeat: Infinity,
+            ease: "linear" as const,
+          },
+          style: {
+            background:
+              "linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)",
+            backgroundSize: "200% 100%",
+          },
+        };
 
   const finalWidth = width || defaultSizes[variant].width;
   const finalHeight = height || defaultSizes[variant].height;
@@ -77,13 +80,12 @@ export default function Skeleton({
   );
 }
 
-// Preset components for common use cases
-export function SkeletonText({ 
-  lines = 1, 
+export function SkeletonText({
+  lines = 1,
   className = "",
-  lastLineWidth = "75%"
-}: { 
-  lines?: number; 
+  lastLineWidth = "75%",
+}: {
+  lines?: number;
   className?: string;
   lastLineWidth?: string;
 }) {
@@ -103,7 +105,9 @@ export function SkeletonText({
 
 export function SkeletonCard({ className = "" }: { className?: string }) {
   return (
-    <div className={`p-6 bg-surface-container-low rounded-[16px] space-y-4 ${className}`}>
+    <div
+      className={`p-6 bg-surface-container-low dark:bg-dark-surface-container-low rounded-[16px] space-y-4 ${className}`}
+    >
       <div className="flex items-center space-x-4">
         <Skeleton variant="circular" width={48} height={48} />
         <div className="flex-1 space-y-2">
