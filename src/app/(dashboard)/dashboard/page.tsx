@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "@/presentation/utils/animations";
 import { useDashboard } from "@/presentation/hooks/useDashboard";
+import { formatDateShort } from "@/presentation/utils/format";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -148,7 +149,7 @@ export default function DashboardPage() {
                       {transaction.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
                     </p>
                     <p className="text-body-small text-on-surface-variant">
-                      {transaction.date.toLocaleDateString('es-ES')}
+                      {formatDateShort(transaction.date)}
                     </p>
                   </div>
                 </div>

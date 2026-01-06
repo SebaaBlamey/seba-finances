@@ -10,5 +10,15 @@ export const formatDate = (date: Date): string => {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: 'UTC'
+  }).format(date);
+};
+
+export const formatDateShort = (date: Date): string => {
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+    timeZone: 'UTC'
   }).format(date);
 };
