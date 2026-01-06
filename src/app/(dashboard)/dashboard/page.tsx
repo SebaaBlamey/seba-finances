@@ -27,13 +27,13 @@ export default function DashboardPage() {
               <div className="flex justify-between items-start">
                 <div>
                   <p className="text-title-medium font-medium opacity-80">Balance Total</p>
-                  <h2 className="text-display-medium font-normal mt-2">
+                  <div className="text-display-medium font-normal mt-2">
                     {loading ? (
                       <Spinner size="sm" />
                     ) : (
                       data?.monthlySummary.balance?.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) || '$0.00'
                     )}
-                  </h2>
+                  </div>
                 </div>
                 <div className="bg-on-primary-container/10 p-3 rounded-full">
                   <Wallet className="w-8 h-8" />
@@ -62,13 +62,13 @@ export default function DashboardPage() {
                 </div>
                 <span className="text-title-medium font-medium text-on-surface-variant">Ingresos</span>
               </div>
-              <p className="text-headline-medium font-normal text-on-surface">
+              <div className="text-headline-medium font-normal text-on-surface">
                 {loading ? (
                   <Spinner size="sm" />
                 ) : (
                   data?.monthlySummary.totalIncome?.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) || '$0.00'
                 )}
-              </p>
+              </div>
               <div className="mt-2 flex items-center gap-2">
                 <span className="bg-success/10 text-success px-2 py-1 rounded-md text-label-medium font-medium">+12.5%</span>
                 <span className="text-body-small text-on-surface-variant">vs mes anterior</span>
@@ -86,13 +86,13 @@ export default function DashboardPage() {
                 </div>
                 <span className="text-title-medium font-medium text-on-surface-variant">Gastos</span>
               </div>
-              <p className="text-headline-medium font-normal text-on-surface">
+              <div className="text-headline-medium font-normal text-on-surface">
                 {loading ? (
                   <Spinner size="sm" />
                 ) : (
                   data?.monthlySummary.totalExpenses?.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) || '$0.00'
                 )}
-              </p>
+              </div>
               <div className="mt-2 flex items-center gap-2">
                 <span className="bg-success/10 text-success px-2 py-1 rounded-md text-label-medium font-medium">-5.2%</span>
                 <span className="text-body-small text-on-surface-variant">vs mes anterior</span>
